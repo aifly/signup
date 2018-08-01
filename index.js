@@ -1,11 +1,10 @@
 import Vue from "vue";
 import './components/css/index.css';
 import Index from './components/index/index';
-import Introduce from './components/introduce/index';
-import Friend from './components/friend/index';
-import Detail from './components/detail/index';
-import Main from './components/main/index';
-import Music from './components/music/index';
+import Form from './components/form/index';
+import Signin from './components/signin/index';
+import Search from './components/search/index';
+ 
 import Obserable from './components/lib/obserable';
 import {
 	imgs
@@ -59,9 +58,9 @@ new Vue({
 		*/
 		template: `<div>
 		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Index>
-		<Introduce :pv='pv' v-if='show && !isShare'  :obserable='obserable'></Introduce>
-		<Detail :pv='pv' v-if='show && !isShare'  :obserable='obserable'></Detail>
-		<Friend :pv='pv' v-if='show && !isShare'  :obserable='obserable'></Friend>
+		<Form :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Form>
+		<Signin :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Signin>
+		<Search :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Search>
 		<div  v-if='!loaded' :style='{background:"#158ae4"}' class='zmiti-loading lt-full'>
 			<div class='zmiti-loading-ui'>
 				 <a href="#">
@@ -108,7 +107,7 @@ new Vue({
 				url: window.protocol + '//api.zmiti.com/v2/custom/update_pvnum/',
 				type: 'post',
 				data: {
-					customid: 60
+					customid: 64
 				}
 			}).done((data) => {
 				if (data.getret === 0) {
@@ -124,11 +123,9 @@ new Vue({
 	},
 	components: {
 		Index,
-		Music,
-		Main,
-		Introduce,
-		Detail,
-		Friend
+		Form,
+		Signin,
+		Search
 	},
 	mounted() {
 

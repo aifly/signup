@@ -1,0 +1,28 @@
+﻿@import "../css/base.scss";
+
+.zmiti-search-main-ui{
+	background: #fff;
+	opacity:0;
+	z-index: -1;
+	@include displayBox(vertical);
+
+	.zmiti-search-result-C{
+		-webkit-box-flex:1;
+		width: 100%;
+		overflow: hidden;
+
+	}
+	.zmiti-search-footer{
+		height: 80px;
+		line-height: 80px;
+		background-image: -webkit-linear-gradient(left, #fe6500, #f00000);
+		color:#fff;
+		text-align: center;
+		width: 100%;
+		margin-top: 10px;;
+	}
+	&.show{
+		opacity:1;
+		z-index:201;
+	};
+}
