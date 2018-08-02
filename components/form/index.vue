@@ -32,9 +32,11 @@
 				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入报名人手机号码"/>
 			</div>
 
-			<div class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
+			<div v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 				提交
 			</div>
+
+			<Toast :msg='msg' :errorMsg='errorMsg'></Toast>
 		</div>
 	
 	
@@ -48,7 +50,7 @@
 	} from '../lib/assets.js';
 	import zmitiUtil from '../lib/util';
 	import $ from 'jquery';
-	import IScroll from 'iscroll';
+	import Toast from '../toast/toast'
 	export default {
 		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
 		name: 'zmitiindex',
@@ -57,6 +59,8 @@
 				imgs,
 				showTeam: false,
 				show: false,
+				msg:"",
+				errorMsg:'',
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
 				showMasks: false,
@@ -106,17 +110,50 @@
 		},
 	
 		components: {
+			Toast
 		},
 		methods: {
-			 
+			 submit(){
+
+				 var s = this;
+
+				 if(!s.formUser.username){
+					 this.errorMsg = '用户名不能用空';
+					 setTimeout(() => {
+						this.errorMsg = '';	 
+					 }, 1000);
+					 return;
+				 }
+				 $.ajax({
+					 url:"",
+					 type:'post',
+					 data:{},
+					 success(data){
+						 if(data.getret === 0){
+							 s.msg = '提交成功';
+							 s.errorMsg = '';
+
+							 setTimeout(() => {
+								s.msg = '';
+								s.show = false;
+							 }, 2000);
+						 }else{
+							 s.errorMsg = '提交失败';
+							 s.msg = '';
+							 setTimeout(() => {
+								s.errorMsg = '';	 
+							 }, 2000);
+						 }
+
+					 }
+				 })
+				  
+			 }
 			
 		},
 	
 		mounted() {
 			window.s = this;
-
-			
-			 
 		}
 	
 	}

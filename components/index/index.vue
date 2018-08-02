@@ -121,6 +121,7 @@
 				this.showQD = false;
 			},
 			menuClick(index){
+				var {obserable } =this;
 				switch (index) {
 					case 0:
 						
@@ -144,6 +145,11 @@
 					case 8:
 					break;
 					case 9:
+					break;
+					case 10:
+					obserable.trigger({
+						type:'showSearch'
+					})
 					break;
 				}
 			}

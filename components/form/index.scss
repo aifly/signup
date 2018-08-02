@@ -80,6 +80,7 @@ $color: #fffb88;
 			left: 100px;
 			top: 0;
 			opacity:0;
+			z-index:100;
 			@include pos(a);
 			
 		}

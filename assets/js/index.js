@@ -58,19 +58,19 @@
 
 	var _componentsIndexIndex2 = _interopRequireDefault(_componentsIndexIndex);
 
-	var _componentsFormIndex = __webpack_require__(18);
+	var _componentsFormIndex = __webpack_require__(17);
 
 	var _componentsFormIndex2 = _interopRequireDefault(_componentsFormIndex);
 
-	var _componentsSigninIndex = __webpack_require__(50);
+	var _componentsSigninIndex = __webpack_require__(23);
 
 	var _componentsSigninIndex2 = _interopRequireDefault(_componentsSigninIndex);
 
-	var _componentsSearchIndex = __webpack_require__(60);
+	var _componentsSearchIndex = __webpack_require__(28);
 
 	var _componentsSearchIndex2 = _interopRequireDefault(_componentsSearchIndex);
 
-	var _componentsLibObserable = __webpack_require__(47);
+	var _componentsLibObserable = __webpack_require__(33);
 
 	var _componentsLibObserable2 = _interopRequireDefault(_componentsLibObserable);
 
@@ -84,9 +84,9 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	__webpack_require__(48);
+	__webpack_require__(34);
 
-	var _vueJsTap = __webpack_require__(49);
+	var _vueJsTap = __webpack_require__(35);
 
 	var _vueJsTap2 = _interopRequireDefault(_vueJsTap);
 
@@ -12043,7 +12043,7 @@
 
 	var __vue_script__, __vue_template__
 	__vue_script__ = __webpack_require__(10)
-	__vue_template__ = __webpack_require__(17)
+	__vue_template__ = __webpack_require__(16)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
@@ -12196,6 +12196,8 @@
 				this.showQD = false;
 			},
 			menuClick: function menuClick(index) {
+				var obserable = this.obserable;
+
 				switch (index) {
 					case 0:
 
@@ -12220,6 +12222,11 @@
 					case 8:
 						break;
 					case 9:
+						break;
+					case 10:
+						obserable.trigger({
+							type: 'showSearch'
+						});
 						break;
 				}
 			}
@@ -22399,19 +22406,18 @@
 
 
 /***/ }),
-/* 16 */,
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	module.exports = "\r\n\t<div class=\"lt-full zmiti-index-main-ui \"  :class=\"{'show':show}\">\r\n\t\t<div class=\"zmiti-title\">\r\n\t\t\t<div class=\"zmiti-index-logo\">\r\n\t\t\t\t<img :src=\"imgs.logo\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<img @touchstart='imgStart' :src=\"imgs.title\">\r\n\t\t</div>\r\n\t\t<div class=\"zmiti-nav\">\r\n\t\t\t<ul>\r\n\t\t\t\t<li v-for=\"(menu,i) in menus\" :key=\"i\" v-tap='[menuClick,i]'>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :style=\"{width:menu.width}\" :src=\"menu.img\" alt=\"\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>{{menu.name}}</div>\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\r\n\t\t<section class=\"lt-full zmiti-qd-mask\" v-show='showQD'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qiandaoBg\" alt=\"\">\r\n\t\t\t\t<div class=\"zmiti-qd-info\">\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t请打开微信扫一扫\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t扫描签到二维码即可成功签到\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[close]'>关 闭</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n";
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(19)
-	__vue_template__ = __webpack_require__(28)
+	__vue_script__ = __webpack_require__(18)
+	__vue_template__ = __webpack_require__(22)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
@@ -22428,7 +22434,7 @@
 	})()}
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// <template>
@@ -22465,9 +22471,11 @@
 	// 				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入报名人手机号码"/>
 	// 			</div>
 	//
-	// 			<div class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
+	// 			<div v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 	// 				提交
 	// 			</div>
+	//
+	// 			<Toast :msg='msg' :errorMsg='errorMsg'></Toast>
 	// 		</div>
 	//
 	//
@@ -22483,7 +22491,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	__webpack_require__(20);
+	__webpack_require__(19);
 
 	var _libAssetsJs = __webpack_require__(13);
 
@@ -22495,9 +22503,9 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _iscroll = __webpack_require__(22);
+	var _toastToast = __webpack_require__(37);
 
-	var _iscroll2 = _interopRequireDefault(_iscroll);
+	var _toastToast2 = _interopRequireDefault(_toastToast);
 
 	exports['default'] = {
 		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
@@ -22507,6 +22515,8 @@
 				imgs: _libAssetsJs.imgs,
 				showTeam: false,
 				show: false,
+				msg: "",
+				errorMsg: '',
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
 				showMasks: false,
@@ -22523,8 +22533,47 @@
 			};
 		},
 
-		components: {},
-		methods: {},
+		components: {
+			Toast: _toastToast2['default']
+		},
+		methods: {
+			submit: function submit() {
+				var _this = this;
+
+				var s = this;
+
+				if (!s.formUser.username) {
+					this.errorMsg = '用户名不能用空';
+					setTimeout(function () {
+						_this.errorMsg = '';
+					}, 1000);
+					return;
+				}
+				_jquery2['default'].ajax({
+					url: "",
+					type: 'post',
+					data: {},
+					success: function success(data) {
+						if (data.getret === 0) {
+							s.msg = '提交成功';
+							s.errorMsg = '';
+
+							setTimeout(function () {
+								s.msg = '';
+								s.show = false;
+							}, 2000);
+						} else {
+							s.errorMsg = '提交失败';
+							s.msg = '';
+							setTimeout(function () {
+								s.errorMsg = '';
+							}, 2000);
+						}
+					}
+				});
+			}
+
+		},
 
 		mounted: function mounted() {
 			window.s = this;
@@ -22536,13 +22585,13 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(21);
+	var content = __webpack_require__(20);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(8)(content, {});
@@ -22562,7 +22611,7 @@
 	}
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(7)();
@@ -22570,13 +22619,13 @@
 
 
 	// module
-	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-form-main-ui {\n  overflow: hidden;\n  background: #f3f3f4;\n  opacity: 0;\n  z-index: -1;\n}\n\n.zmiti-form-main-ui.show {\n  opacity: 1;\n  z-index: 202;\n}\n\n.zmiti-form-main-ui .zmiti-form-item {\n  background: #fff;\n  padding-left: 20px;\n  height: 100px;\n  color: #777777;\n  line-height: 100px;\n  position: relative;\n}\n\n.zmiti-form-main-ui .zmiti-form-item:before {\n  content: \"\";\n  width: 730px;\n  height: 1px;\n  position: absolute;\n  background: #f5f5f5;\n  left: 20px;\n  bottom: 0;\n}\n\n.zmiti-form-main-ui .zmiti-form-item span {\n  margin-left: 65px;\n  color: #000;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input {\n  margin-left: 40px;\n  width: 510px;\n  height: 50px;\n  outline: none;\n  font-size: 30px;\n  border: none;\n  position: absolute;\n  top: 20px;\n  left: 100px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input::-webkit-input-placeholder {\n  color: #dddddd;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select:after {\n  content: attr(data-content);\n  color: #dddddd;\n  position: absolute;\n  left: 155px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select label:before {\n  content: \"\";\n  width: 24px;\n  height: 24px;\n  border: 2px solid #ccc;\n  position: absolute;\n  right: 60px;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-left: none;\n  border-bottom: none;\n  top: 30px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item select {\n  outline: none;\n  font-size: 28px;\n  width: 80%;\n  height: 100%;\n  left: 100px;\n  top: 0;\n  opacity: 0;\n  position: absolute;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: absolute;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n@-webkit-keyframes ar {\n  from {\n    margin-top: -5px;\n  }\n  to {\n    margin-top: 5px;\n  }\n}\n", ""]);
+	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-form-main-ui {\n  overflow: hidden;\n  background: #f3f3f4;\n  opacity: 0;\n  z-index: -1;\n}\n\n.zmiti-form-main-ui.show {\n  opacity: 1;\n  z-index: 202;\n}\n\n.zmiti-form-main-ui .zmiti-form-item {\n  background: #fff;\n  padding-left: 20px;\n  height: 100px;\n  color: #777777;\n  line-height: 100px;\n  position: relative;\n}\n\n.zmiti-form-main-ui .zmiti-form-item:before {\n  content: \"\";\n  width: 730px;\n  height: 1px;\n  position: absolute;\n  background: #f5f5f5;\n  left: 20px;\n  bottom: 0;\n}\n\n.zmiti-form-main-ui .zmiti-form-item span {\n  margin-left: 65px;\n  color: #000;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input {\n  margin-left: 40px;\n  width: 510px;\n  height: 50px;\n  outline: none;\n  font-size: 30px;\n  border: none;\n  position: absolute;\n  top: 20px;\n  left: 100px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input::-webkit-input-placeholder {\n  color: #dddddd;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select:after {\n  content: attr(data-content);\n  color: #dddddd;\n  position: absolute;\n  left: 155px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select label:before {\n  content: \"\";\n  width: 24px;\n  height: 24px;\n  border: 2px solid #ccc;\n  position: absolute;\n  right: 60px;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-left: none;\n  border-bottom: none;\n  top: 30px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item select {\n  outline: none;\n  font-size: 28px;\n  width: 80%;\n  height: 100%;\n  left: 100px;\n  top: 0;\n  opacity: 0;\n  z-index: 100;\n  position: absolute;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: absolute;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n@-webkit-keyframes ar {\n  from {\n    margin-top: -5px;\n  }\n  to {\n    margin-top: 5px;\n  }\n}\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! iScroll v5.2.0 ~ (c) 2008-2016 Matteo Spinelli ~ http://cubiq.org/license */
@@ -24673,36 +24722,425 @@
 
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */
+/* 22 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<transition name='main'>\r\n\t\t<div class=\"zmiti-form-main-ui lt-full\" :class=\"{'show':show}\">\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.baomingTitle\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">姓名</label><input placeholder=\"请填写报名人姓名\" type=\"text\" v-model=\"formUser.username\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\"  :data-content=\"formUser.sex !== '' ? '' :'请选择报名人性别'\">\r\n\t\t\t\t<label for=\"\">性别</label><select v-model=\"formUser.sex\">\r\n\t\t\t\t\t<option :value=\"1\">男</option>\r\n\t\t\t\t\t<option :value=\"0\">女</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">民族</label><input  v-model=\"formUser.nation\" placeholder=\"请输入报名人民族\" />\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">职务</label><input  v-model=\"formUser.job\" placeholder=\"请输入报名人职务\"/>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\" :data-content=\"formUser.province !== '' ? '' :'请选择报名人省份'\">\r\n\t\t\t\t<label for=\"\">省份</label>\r\n\t\t\t\t<select  v-model=\"formUser.province\">\r\n\t\t\t\t\t<option :value=\"p\" v-for='(p,i) in provinceList' :key=\"i\">{{p}}</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.province}}</span>\r\n\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">手机号</label><input  v-model=\"formUser.mobile\" placeholder=\"请输入报名人手机号码\"/>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"zmiti-btn\" :class=\"{'active':isPress}\" @touchstart='isPress = true' @touchend='isPress = false'>\r\n\t\t\t\t提交\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t\r\n\t</transition>\r\n";
+	module.exports = "\r\n\t<transition name='main'>\r\n\t\t<div class=\"zmiti-form-main-ui lt-full\" :class=\"{'show':show}\">\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.baomingTitle\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">姓名</label><input placeholder=\"请填写报名人姓名\" type=\"text\" v-model=\"formUser.username\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\"  :data-content=\"formUser.sex !== '' ? '' :'请选择报名人性别'\">\r\n\t\t\t\t<label for=\"\">性别</label><select v-model=\"formUser.sex\">\r\n\t\t\t\t\t<option :value=\"1\">男</option>\r\n\t\t\t\t\t<option :value=\"0\">女</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">民族</label><input  v-model=\"formUser.nation\" placeholder=\"请输入报名人民族\" />\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">职务</label><input  v-model=\"formUser.job\" placeholder=\"请输入报名人职务\"/>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\" :data-content=\"formUser.province !== '' ? '' :'请选择报名人省份'\">\r\n\t\t\t\t<label for=\"\">省份</label>\r\n\t\t\t\t<select  v-model=\"formUser.province\">\r\n\t\t\t\t\t<option :value=\"p\" v-for='(p,i) in provinceList' :key=\"i\">{{p}}</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.province}}</span>\r\n\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">手机号</label><input  v-model=\"formUser.mobile\" placeholder=\"请输入报名人手机号码\"/>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[submit]' class=\"zmiti-btn\" :class=\"{'active':isPress}\" @touchstart='isPress = true' @touchend='isPress = false'>\r\n\t\t\t\t提交\r\n\t\t\t</div>\r\n\r\n\t\t\t<Toast :msg='msg' :errorMsg='errorMsg'></Toast>\r\n\t\t</div>\r\n\t\r\n\t\r\n\t</transition>\r\n";
 
 /***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(24)
+	__vue_template__ = __webpack_require__(27)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "F:\\xuchang2018\\project\\signup\\components\\signin\\index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// <template>
+	// 	<transition name='main'>
+	//
+	// 		<div class="lt-full zmiti-signin-main-ui " :class="{'show':show}"  ref='page'>
+	// 			<div>
+	// 				<img :src="imgs.qd" alt="">
+	// 			</div>
+	//
+	// 			<div v-tap='[signin]' class="zmiti-qd-btn" @touchstart='isPress = true' @touchend='isPress = false' :class="{'active':isPress}">
+	// 				点击打卡
+	// 			</div>
+	//
+	// 			<div class="lt-full zmiti-signin-success" v-if='showQdSuccess'>
+	// 				<div>
+	// 					<div>
+	// 						<img :src="imgs.success" alt="">
+	// 						<div style="height:30px;"></div>
+	// 						<div>签到成功</div>
+	// 					</div>
+	// 					<div class="zmiti-btn" v-tap='[back]'>
+	// 						返回
+	// 					</div>
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	//
+	// 	</transition>
+	// </template>
+	//
+	// <script>
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	__webpack_require__(25);
+
+	var _libAssetsJs = __webpack_require__(13);
+
+	var _iscroll = __webpack_require__(21);
+
+	var _iscroll2 = _interopRequireDefault(_iscroll);
+
+	var _jquery = __webpack_require__(15);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _libUtil = __webpack_require__(14);
+
+	var _libUtil2 = _interopRequireDefault(_libUtil);
+
+	exports['default'] = {
+
+		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
+
+		name: 'zmitiindex',
+
+		data: function data() {
+
+			return {
+				imgs: _libAssetsJs.imgs,
+				showTeam: false,
+				showQrcode: false,
+				show: false,
+				viewW: window.innerWidth,
+				viewH: window.innerHeight,
+				showMasks: false,
+				isPress: false,
+				showQdSuccess: false
+			};
+		},
+
+		components: {},
+		methods: {
+			restart: function restart() {
+				window.location.href = window.location.href.split('?')[0];
+			},
+			signin: function signin() {
+				//打卡
+				this.showQdSuccess = true;
+			},
+			back: function back() {
+				this.show = false;
+				this.showQdSuccess = false;
+			}
+
+		},
+
+		mounted: function mounted() {
+			var _this = this;
+
+			var obserable = this.obserable;
+
+			obserable.on('showFriend', function () {
+				_this.show = true;
+			});
+		}
+
+	};
+
+	// </script>
+	module.exports = exports['default'];
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(26);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-signin-main-ui {\n  opacity: 0;\n  z-index: -1;\n  background: #fff;\n}\n\n.zmiti-signin-main-ui.show {\n  z-index: 1230;\n  opacity: 1;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn {\n  position: absolute;\n  width: 240px;\n  height: 240px;\n  border-radius: 50%;\n  background-image: -webkit-linear-gradient(top, #ff7822, #f4110f);\n  text-align: center;\n  line-height: 240px;\n  color: #fff;\n  font-size: 34px;\n  left: 50%;\n  margin-left: -120px;\n  bottom: 200px;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn.active {\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n  -webkit-transition: 0.1s;\n  transition: 0.1s;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn:before, .zmiti-signin-main-ui .zmiti-qd-btn:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n  box-shadow: 0 0 50px rgba(254, 111, 32, 0.3);\n  background: rgba(254, 111, 32, 0.3);\n  left: 0;\n  top: 0;\n  z-index: -1;\n  -webkit-animation: flash 2s linear infinite;\n  animation: flash 2s linear infinite;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn:before {\n  -webkit-animation: flash 2s 1s linear infinite;\n  animation: flash 2s 1s linear infinite;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success {\n  z-index: 100;\n  background: #fff;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success > div {\n  position: relative;\n  height: 65vh;\n  text-align: center;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success > div .zmiti-btn {\n  border-radius: 10px;\n}\n\n.zmiti-back {\n  width: 100px;\n  height: 100px;\n  position: fixed;\n  bottom: 20px;\n  right: 20px;\n  z-index: 100;\n}\n\n@-webkit-keyframes flash {\n  to {\n    -webkit-transform: scale(1.8);\n    transform: scale(1.8);\n    opacity: 0;\n  }\n}\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+	module.exports = "\r\n\t<transition name='main'>\r\n\t\r\n\t\t<div class=\"lt-full zmiti-signin-main-ui \" :class=\"{'show':show}\"  ref='page'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qd\" alt=\"\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[signin]' class=\"zmiti-qd-btn\" @touchstart='isPress = true' @touchend='isPress = false' :class=\"{'active':isPress}\">\r\n\t\t\t\t点击打卡\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"lt-full zmiti-signin-success\" v-if='showQdSuccess'>\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :src=\"imgs.success\" alt=\"\">\r\n\t\t\t\t\t\t<div style=\"height:30px;\"></div>\r\n\t\t\t\t\t\t<div>签到成功</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[back]'>\r\n\t\t\t\t\t\t返回\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t</transition>\r\n";
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(29)
+	__vue_template__ = __webpack_require__(32)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "F:\\xuchang2018\\project\\signup\\components\\search\\index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// <template>
+	// 	<transition name="team">
+	// 		<div class="lt-full zmiti-search-main-ui" :class="{'show':show}">
+	// 			<div class="zmiti-search-result-C">
+	// 				<header class="zmiti-search-header">
+	// 					<div>
+	// 						<span v-tap='[toggleSearchType]'>{{searchtype  ?'省份':'姓名'}}</span>
+	// 						<ul>
+	// 							<li>省份</li>
+	// 							<li>姓名</li>
+	// 						</ul>
+	// 					</div>
+	// 					<div>
+	//
+	// 						<input type="text" placeholder="搜索"  v-model="keyword" />
+	// 					</div>
+	// 					<div>
+	// 						<div :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>搜 索</div>
+	// 					</div>
+	// 				</header>
+	// 				<div class="zmiti-search-list" ref='list'>
+	// 					<ul>
+	// 						<li v-for='(user,i) in userList' :key="i">
+	// 							<header v-tap='[toggleUser,user]'>
+	// 								<div>{{user.username}}</div>
+	// 								<div :class="{'active':user.isdetail}">{{user.isdetail ? "收起":"查看详情"}}</div>
+	// 							</header>
+	// 							<section :style="{minHeight:user.isdetail?'560px':0,height:user.isdetail?'560px':0}">
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">姓名 ：</label><span>{{user.username}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">性别 ：</label><span>{{user.sex === 1 ? '男' :'女'}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">民族 ：</label><span>{{user.nation}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">职务 ：</label><span>{{user.job}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">省份 ：</label><span>{{user.province}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">手机 ：</label><span>{{user.mobile}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">房间 ：</label><span>{{user.room}}</span>
+	// 								</div>
+	// 								<div class='zmiti-user-item'>
+	// 									<label for="">座位 ：</label><span>{{user.seat}}</span>
+	// 								</div>
+	// 							</section>
+	// 						</li>
+	// 						<li style="height:50px;"></li>
+	// 					</ul>
+	// 				</div>
+	// 			</div>
+	// 			<div class="zmiti-search-footer" v-tap='[back]'>返回</div>
+	// 		</div>
+	// 	</transition>
+	// </template>
+	//
+	// <script>
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	__webpack_require__(30);
+
+	var _libAssetsJs = __webpack_require__(13);
+
+	var _libUtil = __webpack_require__(14);
+
+	var _libUtil2 = _interopRequireDefault(_libUtil);
+
+	var _jquery = __webpack_require__(15);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _iscroll = __webpack_require__(21);
+
+	var _iscroll2 = _interopRequireDefault(_iscroll);
+
+	exports['default'] = {
+		props: ['obserable'],
+		name: 'zmitiindex',
+		data: function data() {
+			return {
+				imgs: _libAssetsJs.imgs,
+				searchtype: false,
+				isPress: false,
+				show: true,
+				showTeam: false,
+				keyword: '',
+				userList: []
+			};
+		},
+		components: {},
+
+		methods: {
+			toggleSearchType: function toggleSearchType() {
+				this.searchtype = !this.searchtype;
+			},
+			toggleUser: function toggleUser(user) {
+				var s = this;
+				user.isdetail = !user.isdetail;
+				this.userList = this.userList.filter(function () {
+					return 1;
+				});
+				setTimeout(function () {
+					s.scroll.refresh();
+				}, 650);
+			},
+			imgStart: function imgStart(e) {
+				e.preventDefault();
+			},
+			hideTeam: function hideTeam() {
+				this.showTeam = false;
+			},
+			back: function back() {
+				this.show = false;
+			},
+			search: function search() {
+				var s = this;
+				_jquery2['default'].ajax({
+					url: '/components/search/data.json',
+					success: function success(data) {
+						if (data.getret === 0) {
+							s.userList = data.list;
+							setTimeout(function () {
+								s.scroll.refresh();
+							}, 100);
+						}
+					}
+				});
+			}
+
+		},
+		mounted: function mounted() {
+			var _this = this;
+
+			this.search();
+
+			this.obserable.on('showSearch', function () {
+
+				_this.show = true;
+			});
+
+			this.scroll = new _iscroll2['default'](this.$refs['list'], {
+				scrollbars: true
+			});
+		}
+	};
+
+	// </script>
+	module.exports = exports['default'];
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(31);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-search-main-ui {\n  background: #fff;\n  opacity: 0;\n  z-index: -1;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-search-main-ui .zmiti-search-result-C {\n  -webkit-box-flex: 1;\n  width: 100%;\n  overflow: hidden;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-search-main-ui .zmiti-search-list {\n  -webkit-box-flex: 1;\n  width: 100%;\n  box-sizing: border-box;\n  overflow: hidden;\n  position: relative;\n}\n\n.zmiti-search-main-ui .zmiti-search-list .zmiti-user-item {\n  text-indent: 3em;\n  height: 70px;\n  line-height: 70px;\n}\n\n.zmiti-search-main-ui .zmiti-search-list .zmiti-user-item:last-of-type {\n  border-bottom: 1px solid #f7f7f7;\n}\n\n.zmiti-search-main-ui .zmiti-search-list .zmiti-user-item label {\n  color: #0085c3;\n}\n\n.zmiti-search-main-ui .zmiti-search-list .zmiti-user-item span {\n  color: #999999;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li {\n  margin: 20px 0;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li > section {\n  -webkit-transition: 0.2s;\n  transition: 0.2s;\n  overflow: hidden;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li header {\n  line-height: 100px;\n  height: 100px;\n  padding: 0 40px;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-pack: justify;\n  border-bottom: 1px solid #f4f4f4;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li header div:nth-of-type(2) {\n  color: #ddd;\n  font-size: 24px;\n  padding-right: 1em;\n  position: relative;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li header div:nth-of-type(2):before {\n  content: \"\";\n  width: 12px;\n  height: 12px;\n  border: 2px solid #ccc;\n  position: absolute;\n  right: 0;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-left: none;\n  border-bottom: none;\n  top: 42px;\n}\n\n.zmiti-search-main-ui .zmiti-search-list li header div:nth-of-type(2).active:before {\n  content: \"\";\n  right: 0;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border: 2px solid #ccc;\n  border-left: none;\n  border-top: none;\n  top: 38px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header {\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-pack: justify;\n  width: 750px;\n  padding: 0 20px 80px 20px;\n  box-sizing: border-box;\n  margin: 20px auto;\n  border-bottom: 1px solid #f4f4f4;\n  color: #999999;\n  height: 60px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div {\n  height: 60px;\n  line-height: 60px;\n  font-size: 28px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(1) {\n  padding-right: 30px;\n  width: 100px;\n  text-align: center;\n  position: relative;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(1):before {\n  content: '';\n  position: absolute;\n  width: 10px;\n  height: 10px;\n  border: 2px solid #999;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-top: none;\n  border-left: none;\n  right: 20px;\n  top: 20px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(1) ul {\n  position: absolute;\n  border: 1px solid #ccc;\n  width: 100%;\n  display: none;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(2) {\n  -webkit-box-flex: 1;\n  background: #f5f5f5;\n  border-radius: 40px;\n  position: relative;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(2):before {\n  content: '';\n  position: absolute;\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 2px solid #dddddd;\n  left: 20px;\n  top: 8px;\n  -webkit-transform: translateY(6px);\n  transform: translateY(6px);\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(2):after {\n  content: '';\n  position: absolute;\n  width: 12px;\n  top: 36px;\n  left: 40px;\n  -webkit-transform: translateY(6px) rotate(45deg);\n  transform: translateY(6px) rotate(45deg);\n  border: 2px solid #dddddd;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(2) input {\n  position: absolute;\n  width: 320px;\n  background: transparent;\n  height: 100%;\n  border: none;\n  outline: none;\n  font-size: 30px;\n  color: #999;\n  left: 70px;\n  padding: 0;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(2) input::-webkit-input-placeholder {\n  color: #ddd;\n  font-size: 28px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(3) {\n  text-align: center;\n  width: 130px;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(3) div {\n  background: #f5f5f5;\n  border-radius: 20px;\n  margin: 0 auto;\n  margin-left: 20px;\n  padding: 0 5px;\n  -webkit-transition: 0.1s;\n  transition: 0.1s;\n}\n\n.zmiti-search-main-ui .zmiti-search-header > div:nth-of-type(3) div.active {\n  background: #2c7f4d;\n  color: #fff;\n}\n\n.zmiti-search-main-ui .zmiti-search-footer {\n  height: 80px;\n  line-height: 80px;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n  color: #fff;\n  text-align: center;\n  width: 100%;\n  margin-top: 10px;\n}\n\n.zmiti-search-main-ui.show {\n  opacity: 1;\n  z-index: 201;\n}\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+	module.exports = "\r\n\t<transition name=\"team\">\r\n\t\t<div class=\"lt-full zmiti-search-main-ui\" :class=\"{'show':show}\">\r\n\t\t\t<div class=\"zmiti-search-result-C\">\r\n\t\t\t\t<header class=\"zmiti-search-header\">\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<span v-tap='[toggleSearchType]'>{{searchtype  ?'省份':'姓名'}}</span>\r\n\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t<li>省份</li>\r\n\t\t\t\t\t\t\t<li>姓名</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<input type=\"text\" placeholder=\"搜索\"  v-model=\"keyword\" />\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<div :class=\"{'active':isPress}\" @touchstart='isPress = true' @touchend='isPress = false'>搜 索</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</header>\r\n\t\t\t\t<div class=\"zmiti-search-list\" ref='list'>\r\n\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t<li v-for='(user,i) in userList' :key=\"i\">\r\n\t\t\t\t\t\t\t<header v-tap='[toggleUser,user]'>\r\n\t\t\t\t\t\t\t\t<div>{{user.username}}</div>\r\n\t\t\t\t\t\t\t\t<div :class=\"{'active':user.isdetail}\">{{user.isdetail ? \"收起\":\"查看详情\"}}</div>\r\n\t\t\t\t\t\t\t</header>\r\n\t\t\t\t\t\t\t<section :style=\"{minHeight:user.isdetail?'560px':0,height:user.isdetail?'560px':0}\">\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">姓名 ：</label><span>{{user.username}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">性别 ：</label><span>{{user.sex === 1 ? '男' :'女'}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">民族 ：</label><span>{{user.nation}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">职务 ：</label><span>{{user.job}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">省份 ：</label><span>{{user.province}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">手机 ：</label><span>{{user.mobile}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">房间 ：</label><span>{{user.room}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t<div class='zmiti-user-item'>\r\n\t\t\t\t\t\t\t\t\t<label for=\"\">座位 ：</label><span>{{user.seat}}</span>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</section>\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t<li style=\"height:50px;\"></li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-search-footer\" v-tap='[back]'>返回</div>\r\n\t\t</div>\r\n\t</transition>\r\n";
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -24766,7 +25204,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 48 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24881,7 +25319,7 @@
 	});
 
 /***/ }),
-/* 49 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24977,12 +25415,14 @@
 
 
 /***/ }),
-/* 50 */
+/* 36 */,
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(51)
-	__vue_template__ = __webpack_require__(54)
+	__webpack_require__(38)
+	__vue_script__ = __webpack_require__(40)
+	__vue_template__ = __webpack_require__(41)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
@@ -24990,7 +25430,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "F:\\xuchang2018\\project\\signup\\components\\signin\\index.vue"
+	  var id = "F:\\xuchang2018\\project\\signup\\components\\toast\\toast.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -24999,123 +25439,13 @@
 	})()}
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// <template>
-	// 	<transition name='main'>
-	//
-	// 		<div class="lt-full zmiti-signin-main-ui " :class="{'show':show}"  ref='page'>
-	// 			<div>
-	// 				<img :src="imgs.qd" alt="">
-	// 			</div>
-	//
-	// 			<div v-tap='[signin]' class="zmiti-qd-btn" @touchstart='isPress = true' @touchend='isPress = false' :class="{'active':isPress}">
-	// 				点击打卡
-	// 			</div>
-	//
-	// 			<div class="lt-full zmiti-signin-success" v-if='showQdSuccess'>
-	// 				<div>
-	// 					<div>
-	// 						<img :src="imgs.success" alt="">
-	// 						<div style="height:30px;"></div>
-	// 						<div>签到成功</div>
-	// 					</div>
-	// 					<div class="zmiti-btn" v-tap='[back]'>
-	// 						返回
-	// 					</div>
-	// 				</div>
-	// 			</div>
-	// 		</div>
-	//
-	// 	</transition>
-	// </template>
-	//
-	// <script>
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-		value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	__webpack_require__(52);
-
-	var _libAssetsJs = __webpack_require__(13);
-
-	var _iscroll = __webpack_require__(22);
-
-	var _iscroll2 = _interopRequireDefault(_iscroll);
-
-	var _jquery = __webpack_require__(15);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _libUtil = __webpack_require__(14);
-
-	var _libUtil2 = _interopRequireDefault(_libUtil);
-
-	exports['default'] = {
-
-		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
-
-		name: 'zmitiindex',
-
-		data: function data() {
-
-			return {
-				imgs: _libAssetsJs.imgs,
-				showTeam: false,
-				showQrcode: false,
-				show: false,
-				viewW: window.innerWidth,
-				viewH: window.innerHeight,
-				showMasks: false,
-				isPress: false,
-				showQdSuccess: false
-			};
-		},
-
-		components: {},
-		methods: {
-			restart: function restart() {
-				window.location.href = window.location.href.split('?')[0];
-			},
-			signin: function signin() {
-				//打卡
-				this.showQdSuccess = true;
-			},
-			back: function back() {
-				this.show = false;
-				this.showQdSuccess = false;
-			}
-
-		},
-
-		mounted: function mounted() {
-			var _this = this;
-
-			var obserable = this.obserable;
-
-			obserable.on('showFriend', function () {
-				_this.show = true;
-			});
-		}
-
-	};
-
-	// </script>
-	module.exports = exports['default'];
-
-/***/ }),
-/* 52 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(53);
+	var content = __webpack_require__(39);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(8)(content, {});
@@ -25124,8 +25454,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./index.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./index.css");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-4736e554&file=toast.vue!../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./toast.vue", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-4736e554&file=toast.vue!../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./toast.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -25135,7 +25465,7 @@
 	}
 
 /***/ }),
-/* 53 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(7)();
@@ -25143,169 +25473,118 @@
 
 
 	// module
-	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-signin-main-ui {\n  opacity: 0;\n  z-index: -1;\n  background: #fff;\n}\n\n.zmiti-signin-main-ui.show {\n  z-index: 1230;\n  opacity: 1;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn {\n  position: absolute;\n  width: 240px;\n  height: 240px;\n  border-radius: 50%;\n  background-image: -webkit-linear-gradient(top, #ff7822, #f4110f);\n  text-align: center;\n  line-height: 240px;\n  color: #fff;\n  font-size: 34px;\n  left: 50%;\n  margin-left: -120px;\n  bottom: 200px;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn.active {\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n  -webkit-transition: 0.1s;\n  transition: 0.1s;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn:before, .zmiti-signin-main-ui .zmiti-qd-btn:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n  box-shadow: 0 0 50px rgba(254, 111, 32, 0.3);\n  background: rgba(254, 111, 32, 0.3);\n  left: 0;\n  top: 0;\n  z-index: -1;\n  -webkit-animation: flash 2s linear infinite;\n  animation: flash 2s linear infinite;\n}\n\n.zmiti-signin-main-ui .zmiti-qd-btn:before {\n  -webkit-animation: flash 2s 1s linear infinite;\n  animation: flash 2s 1s linear infinite;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success {\n  z-index: 100;\n  background: #fff;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success > div {\n  position: relative;\n  height: 65vh;\n  text-align: center;\n}\n\n.zmiti-signin-main-ui .zmiti-signin-success > div .zmiti-btn {\n  border-radius: 10px;\n}\n\n.zmiti-back {\n  width: 100px;\n  height: 100px;\n  position: fixed;\n  bottom: 20px;\n  right: 20px;\n  z-index: 100;\n}\n\n@-webkit-keyframes flash {\n  to {\n    -webkit-transform: scale(1.8);\n    transform: scale(1.8);\n    opacity: 0;\n  }\n}\n", ""]);
+	exports.push([module.id, "\r\n\t.zmiti-toast-main-ui{\r\n\t\tposition: fixed;\r\n\t\tbackground: rgba(0,0,0,.5);\r\n\t\tcolor:#fff;\r\n\t\tborder-radius: .3rem;\r\n\t\tpadding:.3rem .5rem;\r\n\t\tleft: 50%;\r\n\t\tz-index: 111111;\r\n\t\ttop: 50%;\r\n\t\t-webkit-transform:translate3d(-50%,-50%,0);\r\n\t\t-webkit-transition:1s;\r\n\t}\r\n\t.zmiti-toast-main-ui.hide{\r\n\t\tdisplay: none;\r\n\t}\r\n\t.zmiti-toast-main-ui .success{\r\n\t\tdisplay: inline-block;\r\n\t\twidth: 34px;\r\n\t\theight: 34px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin-right: 10px;\r\n\t\tborder-radius: 50%;\r\n\t\tbackground:#00ff12;\r\n\t\tposition: relative;\r\n\t\t\r\n\t}\r\n\t.zmiti-toast-main-ui .success:before{\r\n\t\tcontent:\"\";\r\n\t\tposition: absolute;\r\n\t\twidth:10px;\r\n\t\theight: 18px;\r\n\t\tborder:4px solid #fff;\r\n\t\t-webkit-transform:rotate(45deg);\r\n\t\tborder-top: none;\r\n\t\tborder-left: none;\r\n\t\tleft: 10px;\r\n\t\ttop: 4px;\r\n\t}\r\n\r\n\r\n\t.zmiti-toast-main-ui .error{\r\n\t\tdisplay: inline-block;\r\n\t\twidth: 34px;\r\n\t\theight: 34px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin-right: 10px;\r\n\t\tborder-radius: 50%;\r\n\t\tbackground:#f00;\r\n\t\tposition: relative;\r\n\t\t\r\n\t}\r\n\t.zmiti-toast-main-ui .error:before{\r\n\t\tcontent:\"\";\r\n\t\tposition: absolute;\r\n\t\twidth:1px;\r\n\t\theight: 18px;\r\n\t\tborder:4px solid #fff;\r\n\t\t-webkit-transform: translateX(4px) rotate(45deg);\r\n\t\tborder-top: none;\r\n\t\tborder-left: none;\r\n\t\tleft: 10px;\r\n\t\ttop: 4px;\r\n\t}.zmiti-toast-main-ui .error:after{\r\n\t\tcontent:\"\";\r\n\t\tposition: absolute;\r\n\t\twidth:1px;\r\n\t\theight: 18px;\r\n\t\tborder:4px solid #fff;\r\n\t\t-webkit-transform:translateX(4px) rotate(-45deg);\r\n\t\tborder-top: none;\r\n\t\tborder-left: none;\r\n\t\tleft: 10px;\r\n\t\ttop: 4px;\r\n\t}\r\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 54 */
+/* 40 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<transition name='main'>\r\n\t\r\n\t\t<div class=\"lt-full zmiti-signin-main-ui \" :class=\"{'show':show}\"  ref='page'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qd\" alt=\"\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[signin]' class=\"zmiti-qd-btn\" @touchstart='isPress = true' @touchend='isPress = false' :class=\"{'active':isPress}\">\r\n\t\t\t\t点击打卡\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"lt-full zmiti-signin-success\" v-if='showQdSuccess'>\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :src=\"imgs.success\" alt=\"\">\r\n\t\t\t\t\t\t<div style=\"height:30px;\"></div>\r\n\t\t\t\t\t\t<div>签到成功</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[back]'>\r\n\t\t\t\t\t\t返回\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t</transition>\r\n";
-
-/***/ }),
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(61)
-	__vue_template__ = __webpack_require__(64)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "F:\\xuchang2018\\project\\signup\\components\\search\\index.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
 	// <template>
-	// 	<transition name="team">
-	// 		<div class="lt-full zmiti-search-main-ui" :class="{'show':show}">
-	// 			<div class="zmiti-search-result-C">
-	// 				<header class="zmiti-search-header">
-	// 					<div>
-	// 						<ul>
-	// 							<li>省份</li>
-	// 							<li>姓名</li>
-	// 						</ul>
-	// 					</div>
-	// 					<div>
-	// 						<span>搜索</span>
-	// 					</div>
-	// 					<div>
-	// 						<div>搜索</div>
-	// 					</div>
-	// 				</header>
-	// 			</div>
-	// 			<div class="zmiti-search-footer">返回</div>
-	// 		</div>
-	// 	</transition>
+	// 	<div class="zmiti-toast-main-ui" :class='{"hide":msg === "" && errorMsg === ""}'>
+	// 		<span :class="{'success':msg,'error':errorMsg}"></span>{{msg||errorMsg}}
+	// 	</div>
 	// </template>
-	//
 	// <script>
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
 		value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	__webpack_require__(62);
-
-	var _libAssetsJs = __webpack_require__(13);
-
-	var _libUtil = __webpack_require__(14);
-
-	var _libUtil2 = _interopRequireDefault(_libUtil);
-
 	exports['default'] = {
-		props: ['obserable'],
-		name: 'zmitiindex',
+		props: ['msg', 'errorMsg'],
 		data: function data() {
-			return {
-				imgs: _libAssetsJs.imgs,
-				show: true,
-				showTeam: false
-			};
+			return {};
 		},
-		components: {},
-
-		methods: {
-
-			imgStart: function imgStart(e) {
-				e.preventDefault();
-			},
-			hideTeam: function hideTeam() {
-				this.showTeam = false;
-			}
-
-		},
-		mounted: function mounted() {
-			var _this = this;
-
-			this.obserable.on('showTeam', function () {
-
-				_this.showTeam = true;
-			});
-		}
+		mounted: function mounted() {}
 	};
 
 	// </script>
+	// <style>
+	// 	.zmiti-toast-main-ui{
+	// 		position: fixed;
+	// 		background: rgba(0,0,0,.5);
+	// 		color:#fff;
+	// 		border-radius: .3rem;
+	// 		padding:.3rem .5rem;
+	// 		left: 50%;
+	// 		z-index: 111111;
+	// 		top: 50%;
+	// 		-webkit-transform:translate3d(-50%,-50%,0);
+	// 		-webkit-transition:1s;
+	// 	}
+	// 	.zmiti-toast-main-ui.hide{
+	// 		display: none;
+	// 	}
+	// 	.zmiti-toast-main-ui .success{
+	// 		display: inline-block;
+	// 		width: 34px;
+	// 		height: 34px;
+	// 		vertical-align: middle;
+	// 		margin-right: 10px;
+	// 		border-radius: 50%;
+	// 		background:#00ff12;
+	// 		position: relative;
+	//
+	// 	}
+	// 	.zmiti-toast-main-ui .success:before{
+	// 		content:"";
+	// 		position: absolute;
+	// 		width:10px;
+	// 		height: 18px;
+	// 		border:4px solid #fff;
+	// 		-webkit-transform:rotate(45deg);
+	// 		border-top: none;
+	// 		border-left: none;
+	// 		left: 10px;
+	// 		top: 4px;
+	// 	}
+	//
+	//
+	// 	.zmiti-toast-main-ui .error{
+	// 		display: inline-block;
+	// 		width: 34px;
+	// 		height: 34px;
+	// 		vertical-align: middle;
+	// 		margin-right: 10px;
+	// 		border-radius: 50%;
+	// 		background:#f00;
+	// 		position: relative;
+	//
+	// 	}
+	// 	.zmiti-toast-main-ui .error:before{
+	// 		content:"";
+	// 		position: absolute;
+	// 		width:1px;
+	// 		height: 18px;
+	// 		border:4px solid #fff;
+	// 		-webkit-transform: translateX(4px) rotate(45deg);
+	// 		border-top: none;
+	// 		border-left: none;
+	// 		left: 10px;
+	// 		top: 4px;
+	// 	}.zmiti-toast-main-ui .error:after{
+	// 		content:"";
+	// 		position: absolute;
+	// 		width:1px;
+	// 		height: 18px;
+	// 		border:4px solid #fff;
+	// 		-webkit-transform:translateX(4px) rotate(-45deg);
+	// 		border-top: none;
+	// 		border-left: none;
+	// 		left: 10px;
+	// 		top: 4px;
+	// 	}
+	// </style>
 	module.exports = exports['default'];
 
 /***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(63);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./index.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./index.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(7)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-search-main-ui {\n  background: #fff;\n  opacity: 0;\n  z-index: -1;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-search-main-ui .zmiti-search-result-C {\n  -webkit-box-flex: 1;\n  width: 100%;\n  overflow: hidden;\n}\n\n.zmiti-search-main-ui .zmiti-search-footer {\n  height: 80px;\n  line-height: 80px;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n  color: #fff;\n  text-align: center;\n  width: 100%;\n  margin-top: 10px;\n}\n\n.zmiti-search-main-ui.show {\n  opacity: 1;\n  z-index: 201;\n}\n", ""]);
-
-	// exports
-
-
-/***/ }),
-/* 64 */
+/* 41 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<transition name=\"team\">\r\n\t\t<div class=\"lt-full zmiti-search-main-ui\" :class=\"{'show':show}\">\r\n\t\t\t<div class=\"zmiti-search-result-C\">\r\n\t\t\t\t<header class=\"zmiti-search-header\">\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t<li>省份</li>\r\n\t\t\t\t\t\t\t<li>姓名</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<span>搜索</span>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<div>搜索</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</header>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-search-footer\">返回</div>\r\n\t\t</div>\r\n\t</transition>\r\n";
+	module.exports = "\r\n\t<div class=\"zmiti-toast-main-ui\" :class='{\"hide\":msg === \"\" && errorMsg === \"\"}'>\r\n\t\t<span :class=\"{'success':msg,'error':errorMsg}\"></span>{{msg||errorMsg}}\r\n\t</div>\r\n";
 
 /***/ })
 /******/ ]);
