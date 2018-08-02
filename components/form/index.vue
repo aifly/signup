@@ -20,12 +20,12 @@
 			<div class="zmiti-form-item">
 				<label for="">职务</label><input  v-model="formUser.job" placeholder="请输入报名人职务"/>
 			</div>
-			<div class="zmiti-form-item select" :data-content="formUser.province !== '' ? '' :'请选择报名人省份'">
+			<div class="zmiti-form-item select" :data-content="formUser.provicename !== '' ? '' :'请选择报名人省份'">
 				<label for="">省份</label>
-				<select  v-model="formUser.province">
+				<select  v-model="formUser.provicename">
 					<option :value="p" v-for='(p,i) in provinceList' :key="i">{{p}}</option>
 				</select>
-				<span>{{formUser.province}}</span>
+				<span>{{formUser.provicename}}</span>
 
 			</div>
 			<div class="zmiti-form-item">
@@ -58,7 +58,7 @@
 			return {
 				imgs,
 				showTeam: false,
-				show: false,
+				show: true,
 				msg:"",
 				errorMsg:'',
 				viewW: window.innerWidth,
@@ -70,7 +70,7 @@
 					sex:'',
 					nation:'',
 					job:'',
-					province:'',
+					provicename:'',
 					mobile:''
 				},
 				provinceList:[
@@ -124,10 +124,13 @@
 					 }, 1000);
 					 return;
 				 }
+				 var data = this.formUser;
+				 data.wxopenid = '1';
+				 data.pnumber =  1;
 				 $.ajax({
-					 url:"",
+					 url:window.baseUrl+'/wenming/post_signup/',
 					 type:'post',
-					 data:{},
+					 data:data,
 					 success(data){
 						 if(data.getret === 0){
 							 s.msg = '提交成功';
@@ -154,6 +157,31 @@
 	
 		mounted() {
 			window.s = this;
+
+			$.ajax({
+				url:window.baseUrl+'/wenming/getsignuplist/',
+				type:'post',
+				data:{
+					type:2,
+					name:'贵'
+				},
+				success(data){
+					console.log(data);
+				}
+
+			})
+			/*$.ajax({
+				url:window.baseUrl+'/wenming/signin/',
+				type:'post',
+				data:{
+					wxopenid:'1',
+					pnumber:1
+				},
+				success(data){
+					console.log(data);
+				}
+
+			})*/
 		}
 	
 	}
