@@ -7,6 +7,16 @@ var zmitiUtil = {
 			customid: window.customid
 		}
 	},
+	randomString(len) {　　
+		len = len || 32;　　
+		var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'; /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/ 　　
+		var maxPos = $chars.length;　　
+		var pwd = '';　　
+		for (var i = 0; i < len; i++) {　　　　
+			pwd += $chars.charAt(Math.floor(Math.random() * maxPos));　　
+		}　　
+		return pwd;
+	},
 	getQueryString: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		var r = window.location.search.substr(1).match(reg);
@@ -122,15 +132,7 @@ var zmitiUtil = {
 
 	getOauthurl: function(obserable) {
 
-		/*$.ajax({
-			type:"post",
-			url:"http://h5.zhongguowangshi.com/interface/public/index.php?s=v2/Share/createImageByUrl",
-			data:{
-				setimagesrc:"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTK4D8RdGsOFc4UuTR5vGdL1x2dHxMoABic6x21sjL6A1hj30MyZ2CMLJsYibyIUPKpEvCMRN18xBolw/0"
-			}
-		}).done(data=>{
-			console.log(data)
-		})*/
+		
 		var s = this;
 		var {
 			wxappid,
@@ -139,30 +141,13 @@ var zmitiUtil = {
 		} = this.wxInfo();
 
 		if (!s.isWeiXin()) {
-			setTimeout(()=>{
-				obserable.trigger({
-					type:'initWebgl'
-				})
-			},2000)
+			 
 			return;
 		}
-		var key = 'headimgurl8'
-		if(window.localStorage.getItem('nickname') && window.localStorage.getItem(key)){
-			if (obserable) {
-				obserable.trigger({
-					type: 'setUserInfo',
-					data: {
-						nickname:window.localStorage.getItem('nickname'),
-						headimgurl: window.localStorage.getItem(key)
-					}
-				})
+		var key = 'openid3'
+		if(window.localStorage.getItem(key)){
+			window.openid = window.localStorage.getItem(key);
 
-				setTimeout(()=>{
-					obserable.trigger({
-						type:'initWebgl'
-					})
-				},2000)
-			}
 			return;
 		}
 		$.ajax({
@@ -196,33 +181,9 @@ var zmitiUtil = {
 					}).done(data=>{
 
 						if(data.getret === 0){
-
 							window.localStorage.setItem(key,data.getimageurl);
 							window.localStorage.setItem('nickname',s.nickname);
-
-
-							if (obserable) {
-								obserable.trigger({
-									type: 'setUserInfo',
-									data: {
-										nickname: s.nickname,
-										headimgurl: s.headimgurl
-									}
-								})
-
-								setTimeout(()=>{
-									obserable.trigger({
-										type:'initWebgl'
-									})
-								},1000)
-							}
-							s.saveWxUserInfo({
-								wxappid:wxappid,
-								worksid: window.customid,
-								wxopenid: s.openid,
-								nickname: s.nickname,
-								headimgurl: data.getimageurl,
-							})
+							window.localStorage.setItem(key, s.openid);
 						}
 					})
 

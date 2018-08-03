@@ -38,17 +38,34 @@ img {
 	z-index: 1000;
 	//@include transform(scale(1.2));
 	@include pos(f);
-
+	background: #fff;
 	.zmiti-loading-ui {
 		width: 6rem;
 		left: 2rem;
+	
 		@include pos(a);
 		top: 6rem;
-
+		&>div{
+			&:nth-of-type(1){
+				width: 200px;
+				margin: 0 auto;
+				@include pos(r);
+				span{
+					@include pos(a);
+					width: 102%;
+					left: -3px;
+					height: 4px;
+					background:#fff;
+					top: 48%;
+					@include transform(scale(1,1));
+					@include transformOrigin(right);
+				}
+			}
+			color:#333;
+		}
 		a {
 			text-align: center;
 			line-height: 200px;
-			color: #fff;
 			display: block;
 			width: 200px;
 			height: 200px;
@@ -307,7 +324,7 @@ img {
 		.zmiti-progress {
 			margin-top: .5rem;
 			text-align: center;
-			color: #fff;
+			color: #333 !important;
 			font-family: Georgia;
 			font-size: .5rem;
 		}

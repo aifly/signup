@@ -9,6 +9,7 @@ $color: #fffb88;
 	background: #f3f3f4;
 	opacity:0;
 	z-index: -1;
+	position: fixed !important;
 
 	&.show{
 		opacity:1;
@@ -91,7 +92,7 @@ $color: #fffb88;
 		height: 90px;
 		line-height: 90px;
 		text-align: center;
-		@include pos(a);
+		@include pos(f);
 		
 		bottom: 0;
 		left: -5%;

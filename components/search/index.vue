@@ -12,10 +12,10 @@
 					</div>
 					<div>
 						
-						<input type="text" placeholder="搜索"  v-model="keyword" />
+						<input ref='keyword' type="text" placeholder="搜索"  v-model="keyword" />
 					</div>
 					<div>
-						<div :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>搜 索</div>
+						<div v-tap='[search]' :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>搜 索</div>
 					</div>
 				</header>
 				<div class="zmiti-search-list" ref='list'>
@@ -39,16 +39,16 @@
 									<label for="">职务 ：</label><span>{{user.job}}</span>
 								</div>
 								<div class='zmiti-user-item'>
-									<label for="">省份 ：</label><span>{{user.province}}</span>
+									<label for="">省份 ：</label><span>{{user.provicename}}</span>
 								</div>
 								<div class='zmiti-user-item'>
 									<label for="">手机 ：</label><span>{{user.mobile}}</span>
 								</div>
 								<div class='zmiti-user-item'>
-									<label for="">房间 ：</label><span>{{user.room}}</span>
+									<label for="">房间 ：</label><span>{{user.roomnumber}}</span>
 								</div>
 								<div class='zmiti-user-item'>
-									<label for="">座位 ：</label><span>{{user.seat}}</span>
+									<label for="">座位 ：</label><span>{{user.seatnumber}}</span>
 								</div>
 							</section>
 						</li>
@@ -75,7 +75,7 @@
 				imgs,
 				searchtype:false,
 				isPress:false,
-				show:true,
+				show:false,
 				showTeam:false,
 				keyword:'',
 				userList:[]
@@ -104,27 +104,36 @@
 			},
 			back(){
 				this.show = false;
+				this.userList.length = 0;
 			},
 			search(){
 				var s = this;
+
+				this.$ref['keyword'].blur();
+
 				$.ajax({
-					url:'/components/search/data.json',
+					url:window.baseUrl+'/wenming/getsignuplist/',
+					type:'post',
+					data:{
+						type:(s.searchtype|0)+1,
+						name:s.keyword,
+						status:1
+					},
 					success(data){
-						if(data.getret === 0){
+						if(data.getret === 0 ){
 							s.userList = data.list;
-							setTimeout(() => {
-								s.scroll.refresh();
-							}, 100);
 						}
+						console.log(data);
 					}
 				})
+			
 			}
 
 			
 		},
 		mounted(){
 
-			this.search();
+			
 
 			this.obserable.on('showSearch',()=>{
 			 

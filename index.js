@@ -42,6 +42,10 @@ new Vue({
 		loaded: false,
 		nickname: '',
 		headimgurl: '',
+		scale:"(1,1)",
+		scaleStyle:{
+			WebkitTransform:'scale(1,1)'
+		},
 		playStyle: {
 
 		}
@@ -57,19 +61,17 @@ new Vue({
 		<Main :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  v-if='show && !isShare'  :obserable='obserable'></Main>
 		*/
 		template: `<div>
+		<Signin :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Signin>
 		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Index>
 		<Form :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Form>
-		<Signin :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Signin>
 		<Search :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Search>
-		<div  v-if='!loaded' :style='{background:"#158ae4"}' class='zmiti-loading lt-full'>
+		<div  v-if='!loaded' :style='{background:"#fff"}' class='zmiti-loading lt-full'>
 			<div class='zmiti-loading-ui'>
-				 <a href="#">
-			  		<section class='zmiti-head' :style="{background:'url(./assets/images/logo.png) no-repeat center / cover'}"></section>
-			        <div class="line1"></div>
-			        <div class="line2"></div>
-			        <div class="line3"></div>
-					<div class='zmiti-progress'>{{width}}%</div>
-			    </a>
+				<div>
+					<img src=${imgs.logo} />
+					<span :style = "scaleStyle" ></span>
+				</div>
+				<div class='zmiti-progress'>{{width}}%</div>
 			</div>
 		</div>
 
@@ -131,39 +133,32 @@ new Vue({
 
 		var s = this;
 
-		var src = (zmitiUtil.getQueryString('src'));
-		var num = (zmitiUtil.getQueryString('num'));
+		var keyword = (zmitiUtil.getQueryString('keyword'));
+		
 
-		this.isShare = src && !isNaN(num);
-
-		this.src = src;
+		
+		this.keyword = keyword;
 
 		obserable.on("setUserInfo",(data)=>{
 
 			this.nickname = data.nickname;
 			this.headimgurl = data.headimgurl;
 		})
-
-		if(this.isShare){
-			setTimeout(()=>{
-				obserable.trigger({
-					type:'toggleShare',
-					data:{
-						show:true,
-						createImg:src,
-						num
-					}
-				})
-				//
-			},1000)
-		}
+		
 
 		s.loading(arr, (scale) => {
 			s.width = scale * 100 | 0;
+			s.scaleStyle.WebkitTransform = "scale(" + (1 - (scale * 100 | 0) / 100) + ",1)";
 		}, () => {
 			s.show = true;
 			s.loaded = true;
-			
+			if (keyword === 'qd') {
+				setTimeout(() => {
+					obserable.trigger({
+						type: 'showQD'
+					})
+				}, 400);
+			}
 		})
 
 		
@@ -182,7 +177,7 @@ new Vue({
 			this.pv += data;
 
 		});
-		//zmitiUtil.getOauthurl(obserable);
+		zmitiUtil.getOauthurl(obserable);
 		zmitiUtil.wxConfig(document.title, window.desc);
 		this.updatePv();
 		return;

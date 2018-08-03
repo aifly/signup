@@ -70,11 +70,32 @@
 				window.location.href = window.location.href.split('?')[0];
 			},
 			signin(){//打卡
-				this.showQdSuccess = true;
+				var {obserable} = this;
+				var s = this;
+				$.ajax({
+					url:window.baseUrl+'/wenming/signin/',
+					type:'post',
+					data:{
+						pnumber:window.pNumber,
+						wxopenid:window.openid
+					},
+					success(data){
+						if(data.getret === 0){
+							s.showQdSuccess = true;
+							obserable.trigger({
+								type:'signin'
+							})
+						}else{
+
+						}
+					}
+				})
+				//this.showQdSuccess = true;
 			},
 			back(){
 				this.show  = false;
 				this.showQdSuccess = false;
+
 			}
 			
 		},
@@ -83,8 +104,38 @@
 			
 
 			var {obserable} = this;
-			obserable.on('showFriend',()=>{
-				this.show = true;
+			var s = this;
+			obserable.on('showQD',()=>{
+
+
+				$.ajax({
+				url:window.baseUrl+'/wenming/getsignuplist/',
+				type:'post',
+				data:{
+					wxopenid:window.openid
+				},
+				success(data){
+					if(data.getret === 0 ){
+						
+						if(data.list.length<=0){
+
+							return;
+						}
+						else{
+							s.show = true;
+							if(!window.openid || data.list[0].status !== 1){//没有审核通过
+								s.show = false;
+							}
+						}
+						 
+					}
+					console.log(data);
+				}
+			})
+
+
+
+				
 			})
 		}
 	

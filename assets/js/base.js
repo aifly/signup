@@ -21,7 +21,7 @@
 	ziliao1:'./assets/images/ziliao1.png',
 	zuowei:'./assets/images/zuowei.png',
 	sousuo:'./assets/images/sousuo.png',
-	sousuo1:'./assets/images/sousuo.png',
+	sousuo1:'./assets/images/sousuo1.png',
 	zuowei1:'./assets/images/zuowei1.png',
 	success:'./assets/images/success.png',
 

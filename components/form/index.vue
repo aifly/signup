@@ -5,22 +5,23 @@
 				<img :src="imgs.baomingTitle" alt="">
 			</div>
 			<div class="zmiti-form-item">
-				<label for="">姓名</label><input placeholder="请填写报名人姓名" type="text" v-model="formUser.username">
+				<label for="">姓名</label><input placeholder="请填写姓名" type="text" v-model="formUser.username">
 			</div>
-			<div class="zmiti-form-item select"  :data-content="formUser.sex !== '' ? '' :'请选择报名人性别'">
+			<div class="zmiti-form-item select"  :data-content="formUser.sex !== '' ? '' :'请选择性别'">
 				<label for="">性别</label><select v-model="formUser.sex">
+					<option :value="1">--请选择--</option>
 					<option :value="1">男</option>
 					<option :value="0">女</option>
 				</select>
 				<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>
 			</div>
 			<div class="zmiti-form-item">
-				<label for="">民族</label><input  v-model="formUser.nation" placeholder="请输入报名人民族" />
+				<label for="">民族</label><input  v-model="formUser.nation" placeholder="请输入民族 如：‘汉族’" />
 			</div>
 			<div class="zmiti-form-item">
-				<label for="">职务</label><input  v-model="formUser.job" placeholder="请输入报名人职务"/>
+				<label for="">职务</label><input  v-model="formUser.job" placeholder="请输入职务"/>
 			</div>
-			<div class="zmiti-form-item select" :data-content="formUser.provicename !== '' ? '' :'请选择报名人省份'">
+			<div class="zmiti-form-item select" :data-content="formUser.provicename !== '' ? '' :'请选择省份'">
 				<label for="">省份</label>
 				<select  v-model="formUser.provicename">
 					<option :value="p" v-for='(p,i) in provinceList' :key="i">{{p}}</option>
@@ -29,7 +30,7 @@
 
 			</div>
 			<div class="zmiti-form-item">
-				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入报名人手机号码"/>
+				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入手机号码"/>
 			</div>
 
 			<div v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
@@ -58,7 +59,7 @@
 			return {
 				imgs,
 				showTeam: false,
-				show: true,
+				show: false,
 				msg:"",
 				errorMsg:'',
 				viewW: window.innerWidth,
@@ -125,8 +126,11 @@
 					 return;
 				 }
 				 var data = this.formUser;
-				 data.wxopenid = '1';
-				 data.pnumber =  1;
+				 if(!data.provicename){
+					 data.provicename = '北京';
+				 }
+				 data.wxopenid = window.openid || zmitiUtil.randomString();
+				 data.pnumber =  window.pNumber;
 				 $.ajax({
 					 url:window.baseUrl+'/wenming/post_signup/',
 					 type:'post',
@@ -141,7 +145,7 @@
 								s.show = false;
 							 }, 2000);
 						 }else{
-							 s.errorMsg = '提交失败';
+							 s.errorMsg = data.getmsg;
 							 s.msg = '';
 							 setTimeout(() => {
 								s.errorMsg = '';	 
@@ -158,17 +162,21 @@
 		mounted() {
 			window.s = this;
 
-			$.ajax({
+			/* $.ajax({
 				url:window.baseUrl+'/wenming/getsignuplist/',
 				type:'post',
 				data:{
-					type:2,
-					name:'贵'
+					type:1,
+					name:"",
+					status:1					
 				},
 				success(data){
 					console.log(data);
 				}
-
+			}) */
+			var {obserable} = this;
+			obserable.on('showForm',()=>{
+				this.show = true;
 			})
 			/*$.ajax({
 				url:window.baseUrl+'/wenming/signin/',
