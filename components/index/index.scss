@@ -23,7 +23,7 @@ $bgColor: #ffffff;
 
 	&.show{
 		opacity: 1;
-		z-index: 200;
+		z-index: 500;
 	}
 
 	.zmiti-index-logo{
@@ -61,6 +61,41 @@ $bgColor: #ffffff;
 			padding-top: 100px;
 			color:#999999;
 			box-sizing: border-box;
+		}
+	}
+
+
+	.zmiti-num-mask{
+		background:rgba(0,0,0,.5);
+		z-index: 100;
+		height: 100% !important;
+		@include displayBox(horizontal);
+		&>div{
+			@include pos(r);
+			min-width: 400px;
+			max-width: 600px;
+			min-height: 280px;
+			
+			div.zmiti-number{
+				margin: 22px;
+				color:#999;
+
+
+				&:nth-of-type(2){
+					font-size:34px;
+					color:#f90;
+					font-weight: bold;
+				}
+			}
+
+			background:#fff;
+			@include br(8px);
+			overflow: hidden;
+			.zmiti-btn{
+				@include pos(a);
+				width: 100%;
+				left: 0;
+			}
 		}
 	}
 	

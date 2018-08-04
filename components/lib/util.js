@@ -144,7 +144,7 @@ var zmitiUtil = {
 			 
 			return;
 		}
-		var key = 'openid3'
+		var key = 'openid6'
 		if(window.localStorage.getItem(key)){
 			window.openid = window.localStorage.getItem(key);
 
@@ -170,7 +170,10 @@ var zmitiUtil = {
 					window.nickname = s.nickname;
 					window.headimgurl = s.headimgurl;
 					window.openid = s.openid;
-					$.ajax({
+
+					window.localStorage.setItem(key, s.openid);
+
+					/* $.ajax({
 						url:"http://h5.zhongguowangshi.com/interface/public/index.php?s=v2/Share/createImageByUrl",
 						type:'post',
 						data:{
@@ -185,7 +188,7 @@ var zmitiUtil = {
 							window.localStorage.setItem('nickname',s.nickname);
 							window.localStorage.setItem(key, s.openid);
 						}
-					})
+					}) */
 
 
 					

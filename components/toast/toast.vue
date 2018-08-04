@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-toast-main-ui" :class='{"hide":msg === "" && errorMsg === ""}'>
+	<div class="zmiti-toast-main-ui" :class='{"hide":!msg && !errorMsg}'>
 		<span :class="{'success':msg,'error':errorMsg}"></span>{{msg||errorMsg}}
 	</div>
 </template>

@@ -31,6 +31,14 @@
 				</div>
 			</div>
 		</section>
+
+		<div v-if='mynumberinfo' class="lt-full zmiti-num-mask">
+			<div>
+				<div class="zmiti-number">{{mynumberinfo}}</div>
+				<div class="zmiti-number" style="text-align:center;">{{mynumber}}</div>
+				<div class="zmiti-btn" v-tap='[closeInfo]'>关 闭</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -44,9 +52,11 @@
 		data(){
 			return{
 				imgs,
-				show:true,
+				show:false,
 				showMasks:false,
 				viewW:window.innerWidth,
+				mynumber:"",
+				mynumberinfo:"",
 				showQD:false,//显示签到提示
 				menus:[
 					{
@@ -103,13 +113,13 @@
 						defaultImg:imgs.ziliao,
 						img1:imgs.ziliao1,
 						width:'60px'
-					},{
+					}/* ,{
 						name:"通讯录",
 						img:imgs.tongxunlu,
 						defaultImg:imgs.tongxunlu,
 						img1:imgs.tongxunlu1,
 						width:'50px'
-					},{
+					} */,{
 						name:"搜索",
 						img:imgs.sousuo,
 						defaultImg:imgs.sousuo,
@@ -124,6 +134,11 @@
 		},
 		
 		methods:{
+
+			closeInfo(){
+				this.mynumber = '';
+				this.mynumberinfo = '';
+			},
 
 			imgStart(e){
 				e.preventDefault(); 
@@ -153,10 +168,20 @@
 					case 3:
 					break;
 					case 4:
+						
+						if(this.isBaoMing){
+
+							this.mynumberinfo = '我的房间号是：'	
+							this.mynumber = this.userinfo.roomnumber||'未分配';
+						}
 					break;
 					case 5:
 					break;
 					case 6:
+						if(this.isBaoMing){
+							this.mynumberinfo = '我的座位号是：'	
+							this.mynumber = this.userinfo.seatnumber||'未分配';
+						}
 					break;
 					case 7:
 					break;
@@ -184,58 +209,8 @@
 				this.show = data.show;
 			});
 
-			var  s= this;
 		
-			$.ajax({
-				url:window.baseUrl+'/wenming/getsignuplist/',
-				type:'post',
-				data:{
-					wxopenid:window.openid
-				},
-				success(data){
-					if(data.getret === 0 ){
-						if(data.list.length<=0){
-							s.menus.forEach((item,i)=>{
-								if(i>0){
-									item.defaultImg = item.img1;
-									item.class = 'grey'
-								}
-							});
-							return;
-						}
-						if(data.list.length > 0 && !window.openid){
-							
-						}else{
-							
-							if(data.list.length === 1){//已经填表
-
-								if(data.list[0].status*1 ===1){//已审核通过
-
-									s.menus[0].defaultImg = s.menus[0].img1
-									s.menus[0].width = '70px';
-									s.menus[0].name = '已报名';
-									s.menus[0].class = 'grey';
-									s.isBaoMing = true;
-								}
-								s.issign = data.list[0].issign;
-								if(s.issign){
-									s.menus[1].defaultImg = s.menus[1].img1;
-									s.menus[1].name = '已签到';
-									s.menus[1].class = 'grey'
-								}else{//没有签到
-									s.menus.forEach((item,i)=>{
-										if(i>1){
-											item.defaultImg = item.img1;
-											item.class = 'grey'
-										}
-									});
-								}
-							}
-						}
-					}
-					console.log(data);
-				}
-			})
+		
 			obserable.on('signin',()=>{
 				s.issign = true;
 				s.menus[1].defaultImg = s.menus[1].img1;

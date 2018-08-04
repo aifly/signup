@@ -41,12 +41,56 @@
   background: #f3f3f4;
   opacity: 0;
   z-index: -1;
-  position: fixed !important;
+  position: absolute !important;
 }
 
 .zmiti-form-main-ui.show {
   opacity: 1;
   z-index: 202;
+}
+
+.zmiti-form-main-ui .zmiti-msg-mask {
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  height: 100% !important;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+}
+
+.zmiti-form-main-ui .zmiti-msg-mask > div {
+  position: relative;
+  min-width: 500px;
+  max-width: 600px;
+  min-height: 280px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.zmiti-form-main-ui .zmiti-msg-mask > div div.zmiti-number {
+  color: #999;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+  height: 100%;
+  padding: 40px;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.zmiti-form-main-ui .zmiti-msg-mask > div div.zmiti-number > div {
+  color: #f90;
+  margin-top: -100px;
+}
+
+.zmiti-form-main-ui .zmiti-msg-mask > div .zmiti-btn {
+  position: absolute;
+  width: 100%;
+  left: 0;
 }
 
 .zmiti-form-main-ui .zmiti-form-item {
@@ -127,7 +171,7 @@
   height: 90px;
   line-height: 90px;
   text-align: center;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: -5%;
   color: #fff;

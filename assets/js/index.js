@@ -90,11 +90,15 @@
 
 	var _vueJsTap2 = _interopRequireDefault(_vueJsTap);
 
-	_vue2['default'].use(_vueJsTap2['default']);
+	var _componentsToastToast = __webpack_require__(21);
+
+	var _componentsToastToast2 = _interopRequireDefault(_componentsToastToast);
 
 	//var VueTouch = im('vue-touch')
 	/*import VueTouch from 'vue-touch';
 	Vue.use(VueTouch, {name: 'v-touch'})*/
+
+	_vue2['default'].use(_vueJsTap2['default']);
 
 	var obserable = new _componentsLibObserable2['default']();
 
@@ -117,7 +121,9 @@
 			loaded: false,
 			nickname: '',
 			headimgurl: '',
+			isWeixin: false,
 			scale: "(1,1)",
+			errorMsg: '',
 			scaleStyle: {
 				WebkitTransform: 'scale(1,1)'
 			},
@@ -133,7 +139,7 @@
 	 	<Music :obserable='obserable'></Music>
 	 	<Main :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  v-if='show && !isShare'  :obserable='obserable'></Main>
 	 	*/
-		template: '<div>\n\t\t<Signin :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Signin>\n\t\t<Index :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Index>\n\t\t<Form :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Form>\n\t\t<Search :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Search>\n\t\t<div  v-if=\'!loaded\' :style=\'{background:"#fff"}\' class=\'zmiti-loading lt-full\'>\n\t\t\t<div class=\'zmiti-loading-ui\'>\n\t\t\t\t<div>\n\t\t\t\t\t<img src=' + _componentsLibAssets.imgs.logo + ' />\n\t\t\t\t\t<span :style = "scaleStyle" ></span>\n\t\t\t\t</div>\n\t\t\t\t<div class=\'zmiti-progress\'>{{width}}%</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\n\t</div>',
+		template: '<div>\n\t\t\t<section v-if=\'isWeixin\'>\n\t\t\t\t<Signin :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Signin>\n\t\t\t\t<Index :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Index>\n\t\t\t\t<Form :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Form>\n\t\t\t\t<Search :pv=\'pv\' :nickname=\'nickname\' :headimgurl=\'headimgurl\'   v-if=\'show && !isShare\'  :obserable=\'obserable\'></Search>\n\t\t\t\t<div  v-if=\'!loaded\' :style=\'{background:"#fff"}\' class=\'zmiti-loading lt-full\'>\n\t\t\t\t\t<div class=\'zmiti-loading-ui\'>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t<img src=' + _componentsLibAssets.imgs.logo + ' />\n\t\t\t\t\t\t\t<span :style = "scaleStyle" ></span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\'zmiti-progress\'>{{width}}%</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t</section>\n\n\t\t\t<section v-if=\'!isWeixin\' class=\'lt-full\'>\n\t\t\t\t<Toast :errorMsg=\'errorMsg\'></Toast>\n\t\t\t</section>\n\n\n\n\t\n\t</div>',
 		methods: {
 
 			loading: function loading(arr, fn, fnEnd) {
@@ -185,11 +191,16 @@
 			Index: _componentsIndexIndex2['default'],
 			Form: _componentsFormIndex2['default'],
 			Signin: _componentsSigninIndex2['default'],
-			Search: _componentsSearchIndex2['default']
+			Search: _componentsSearchIndex2['default'],
+			Toast: _componentsToastToast2['default']
 		},
 		mounted: function mounted() {
 			var _this2 = this;
 
+			this.isWeixin = !window.isCheckWeixin || _componentsLibUtilJs2['default'].isWeiXin();
+			if (!_componentsLibUtilJs2['default'].isWeiXin() && window.isCheckWeixin) {
+				this.errorMsg = '请在微信中访问';
+			}
 			var s = this;
 
 			var keyword = _componentsLibUtilJs2['default'].getQueryString('keyword');
@@ -12091,6 +12102,14 @@
 	// 				</div>
 	// 			</div>
 	// 		</section>
+	//
+	// 		<div v-if='mynumberinfo' class="lt-full zmiti-num-mask">
+	// 			<div>
+	// 				<div class="zmiti-number">{{mynumberinfo}}</div>
+	// 				<div class="zmiti-number" style="text-align:center;">{{mynumber}}</div>
+	// 				<div class="zmiti-btn" v-tap='[closeInfo]'>关 闭</div>
+	// 			</div>
+	// 		</div>
 	// 	</div>
 	// </template>
 	//
@@ -12117,9 +12136,11 @@
 		data: function data() {
 			return {
 				imgs: _libAssetsJs.imgs,
-				show: true,
+				show: false,
 				showMasks: false,
 				viewW: window.innerWidth,
+				mynumber: "",
+				mynumberinfo: "",
 				showQD: false, //显示签到提示
 				menus: [{
 					name: "报名",
@@ -12175,13 +12196,13 @@
 					defaultImg: _libAssetsJs.imgs.ziliao,
 					img1: _libAssetsJs.imgs.ziliao1,
 					width: '60px'
-				}, {
-					name: "通讯录",
-					img: _libAssetsJs.imgs.tongxunlu,
-					defaultImg: _libAssetsJs.imgs.tongxunlu,
-					img1: _libAssetsJs.imgs.tongxunlu1,
-					width: '50px'
-				}, {
+				} /* ,{
+	     name:"通讯录",
+	     img:imgs.tongxunlu,
+	     defaultImg:imgs.tongxunlu,
+	     img1:imgs.tongxunlu1,
+	     width:'50px'
+	     } */, {
 					name: "搜索",
 					img: _libAssetsJs.imgs.sousuo,
 					defaultImg: _libAssetsJs.imgs.sousuo,
@@ -12194,6 +12215,11 @@
 		components: {},
 
 		methods: {
+
+			closeInfo: function closeInfo() {
+				this.mynumber = '';
+				this.mynumberinfo = '';
+			},
 
 			imgStart: function imgStart(e) {
 				e.preventDefault();
@@ -12225,10 +12251,20 @@
 					case 3:
 						break;
 					case 4:
+
+						if (this.isBaoMing) {
+
+							this.mynumberinfo = '我的房间号是：';
+							this.mynumber = this.userinfo.roomnumber || '未分配';
+						}
 						break;
 					case 5:
 						break;
 					case 6:
+						if (this.isBaoMing) {
+							this.mynumberinfo = '我的座位号是：';
+							this.mynumber = this.userinfo.seatnumber || '未分配';
+						}
 						break;
 					case 7:
 						break;
@@ -12256,59 +12292,6 @@
 				_this.show = data.show;
 			});
 
-			var s = this;
-
-			$.ajax({
-				url: window.baseUrl + '/wenming/getsignuplist/',
-				type: 'post',
-				data: {
-					wxopenid: window.openid
-				},
-				success: function success(data) {
-					if (data.getret === 0) {
-						if (data.list.length <= 0) {
-							s.menus.forEach(function (item, i) {
-								if (i > 0) {
-									item.defaultImg = item.img1;
-									item['class'] = 'grey';
-								}
-							});
-							return;
-						}
-						if (data.list.length > 0 && !window.openid) {} else {
-
-							if (data.list.length === 1) {
-								//已经填表
-
-								if (data.list[0].status * 1 === 1) {
-									//已审核通过
-
-									s.menus[0].defaultImg = s.menus[0].img1;
-									s.menus[0].width = '70px';
-									s.menus[0].name = '已报名';
-									s.menus[0]['class'] = 'grey';
-									s.isBaoMing = true;
-								}
-								s.issign = data.list[0].issign;
-								if (s.issign) {
-									s.menus[1].defaultImg = s.menus[1].img1;
-									s.menus[1].name = '已签到';
-									s.menus[1]['class'] = 'grey';
-								} else {
-									//没有签到
-									s.menus.forEach(function (item, i) {
-										if (i > 1) {
-											item.defaultImg = item.img1;
-											item['class'] = 'grey';
-										}
-									});
-								}
-							}
-						}
-					}
-					console.log(data);
-				}
-			});
 			obserable.on('signin', function () {
 				s.issign = true;
 				s.menus[1].defaultImg = s.menus[1].img1;
@@ -12363,7 +12346,7 @@
 
 
 	// module
-	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-index-main-ui {\n  overflow: hidden;\n  width: 10rem;\n  left: 50% !important;\n  margin-left: -375px;\n  background: #ffffff;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n  opacity: 0;\n  z-index: -1;\n}\n\n.zmiti-index-main-ui > div {\n  -webkit-box-flex: 1;\n  width: 100%;\n  height: 50%;\n}\n\n.zmiti-index-main-ui.show {\n  opacity: 1;\n  z-index: 200;\n}\n\n.zmiti-index-main-ui .zmiti-index-logo {\n  position: absolute;\n  left: 30px;\n  top: 30px;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask {\n  background: rgba(0, 0, 0, 0.5);\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div {\n  position: relative;\n  text-align: center;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div img {\n  width: 300px;\n  position: relative;\n  z-index: 10;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div .zmiti-btn {\n  position: absolute;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask .zmiti-qd-info {\n  width: 500px;\n  background: #fff;\n  height: 300px;\n  position: relative;\n  overflow: hidden;\n  z-index: 0;\n  margin-top: -100px;\n  border-radius: 20px;\n  padding-top: 100px;\n  color: #999999;\n  box-sizing: border-box;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: absolute;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n.zmiti-index-main-ui .zmiti-nav {\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-index-main-ui .zmiti-nav ul {\n  width: 85%;\n}\n\n.zmiti-index-main-ui .zmiti-nav li {\n  display: inline-block;\n  margin: 32px 44px;\n  min-width: 70px;\n  text-align: center;\n  font-size: 24px;\n}\n\n.zmiti-index-main-ui .zmiti-nav li div {\n  color: #00496b;\n  margin: 2px auto;\n}\n\n.zmiti-index-main-ui .zmiti-nav li div:nth-of-type(2) {\n  height: 60px;\n  line-height: 80px;\n}\n\n.zmiti-index-main-ui .zmiti-nav li .grey {\n  color: #bbbbbb;\n}\n\n@-webkit-keyframes rotate1 {\n  to {\n    -webkit-transform: rotate(360deg) scale(2);\n    transform: rotate(360deg) scale(2);\n    opacity: 0;\n  }\n}\n\n.zmiti-loading {\n  z-index: 1000;\n}\n\n.zmiti-loading .zmiti-loading-ui {\n  width: 6rem;\n  left: 2rem;\n  position: absolute;\n  top: 6rem;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar {\n  width: 2rem;\n  border-radius: 10px;\n  position: relative;\n  margin: 0 auto;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar:before {\n  content: '';\n  border-radius: 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar .zmiti-target {\n  width: 0.4rem;\n  height: 0.4rem;\n  border-radius: 50%;\n  background: #fff;\n  left: 50%;\n  top: .4rem;\n  position: absolute;\n  margin-left: -0.2rem;\n  -webkit-animation: scale linear 2s infinite alternate;\n  animation: scale linear 2s infinite alternate;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-progress {\n  margin-top: .5rem;\n  text-align: center;\n  color: #fff;\n  font-family: Georgia;\n  font-size: .7rem;\n}\n", ""]);
+	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-index-main-ui {\n  overflow: hidden;\n  width: 10rem;\n  left: 50% !important;\n  margin-left: -375px;\n  background: #ffffff;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n  opacity: 0;\n  z-index: -1;\n}\n\n.zmiti-index-main-ui > div {\n  -webkit-box-flex: 1;\n  width: 100%;\n  height: 50%;\n}\n\n.zmiti-index-main-ui.show {\n  opacity: 1;\n  z-index: 500;\n}\n\n.zmiti-index-main-ui .zmiti-index-logo {\n  position: absolute;\n  left: 30px;\n  top: 30px;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask {\n  background: rgba(0, 0, 0, 0.5);\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div {\n  position: relative;\n  text-align: center;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div img {\n  width: 300px;\n  position: relative;\n  z-index: 10;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask > div .zmiti-btn {\n  position: absolute;\n}\n\n.zmiti-index-main-ui .zmiti-qd-mask .zmiti-qd-info {\n  width: 500px;\n  background: #fff;\n  height: 300px;\n  position: relative;\n  overflow: hidden;\n  z-index: 0;\n  margin-top: -100px;\n  border-radius: 20px;\n  padding-top: 100px;\n  color: #999999;\n  box-sizing: border-box;\n}\n\n.zmiti-index-main-ui .zmiti-num-mask {\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  height: 100% !important;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: horizontal;\n}\n\n.zmiti-index-main-ui .zmiti-num-mask > div {\n  position: relative;\n  min-width: 400px;\n  max-width: 600px;\n  min-height: 280px;\n  background: #fff;\n  border-radius: 8px;\n  overflow: hidden;\n}\n\n.zmiti-index-main-ui .zmiti-num-mask > div div.zmiti-number {\n  margin: 22px;\n  color: #999;\n}\n\n.zmiti-index-main-ui .zmiti-num-mask > div div.zmiti-number:nth-of-type(2) {\n  font-size: 34px;\n  color: #f90;\n  font-weight: bold;\n}\n\n.zmiti-index-main-ui .zmiti-num-mask > div .zmiti-btn {\n  position: absolute;\n  width: 100%;\n  left: 0;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: absolute;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n.zmiti-index-main-ui .zmiti-nav {\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: vertical;\n}\n\n.zmiti-index-main-ui .zmiti-nav ul {\n  width: 85%;\n}\n\n.zmiti-index-main-ui .zmiti-nav li {\n  display: inline-block;\n  margin: 32px 44px;\n  min-width: 70px;\n  text-align: center;\n  font-size: 24px;\n}\n\n.zmiti-index-main-ui .zmiti-nav li div {\n  color: #00496b;\n  margin: 2px auto;\n}\n\n.zmiti-index-main-ui .zmiti-nav li div:nth-of-type(2) {\n  height: 60px;\n  line-height: 80px;\n}\n\n.zmiti-index-main-ui .zmiti-nav li .grey {\n  color: #bbbbbb;\n}\n\n@-webkit-keyframes rotate1 {\n  to {\n    -webkit-transform: rotate(360deg) scale(2);\n    transform: rotate(360deg) scale(2);\n    opacity: 0;\n  }\n}\n\n.zmiti-loading {\n  z-index: 1000;\n}\n\n.zmiti-loading .zmiti-loading-ui {\n  width: 6rem;\n  left: 2rem;\n  position: absolute;\n  top: 6rem;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar {\n  width: 2rem;\n  border-radius: 10px;\n  position: relative;\n  margin: 0 auto;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar:before {\n  content: '';\n  border-radius: 10px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-loading-bar .zmiti-target {\n  width: 0.4rem;\n  height: 0.4rem;\n  border-radius: 50%;\n  background: #fff;\n  left: 50%;\n  top: .4rem;\n  position: absolute;\n  margin-left: -0.2rem;\n  -webkit-animation: scale linear 2s infinite alternate;\n  animation: scale linear 2s infinite alternate;\n}\n\n.zmiti-loading .zmiti-loading-ui .zmiti-progress {\n  margin-top: .5rem;\n  text-align: center;\n  color: #fff;\n  font-family: Georgia;\n  font-size: .7rem;\n}\n", ""]);
 
 	// exports
 
@@ -12535,7 +12518,7 @@
 
 				return;
 			}
-			var key = 'openid3';
+			var key = 'openid6';
 			if (window.localStorage.getItem(key)) {
 				window.openid = window.localStorage.getItem(key);
 
@@ -12561,22 +12544,24 @@
 						window.nickname = s.nickname;
 						window.headimgurl = s.headimgurl;
 						window.openid = s.openid;
-						_jquery2['default'].ajax({
-							url: "http://h5.zhongguowangshi.com/interface/public/index.php?s=v2/Share/createImageByUrl",
-							type: 'post',
-							data: {
-								setimagesrc: s.headimgurl,
-								setwidth: 300,
-								setheight: 300
-							}
-						}).done(function (data) {
 
-							if (data.getret === 0) {
-								window.localStorage.setItem(key, data.getimageurl);
-								window.localStorage.setItem('nickname', s.nickname);
-								window.localStorage.setItem(key, s.openid);
-							}
-						});
+						window.localStorage.setItem(key, s.openid);
+
+						/* $.ajax({
+	     	url:"http://h5.zhongguowangshi.com/interface/public/index.php?s=v2/Share/createImageByUrl",
+	     	type:'post',
+	     	data:{
+	     		setimagesrc:s.headimgurl,
+	     		setwidth:300,
+	     		setheight:300
+	     	}
+	     }).done(data=>{
+	     			if(data.getret === 0){
+	     		window.localStorage.setItem(key,data.getimageurl);
+	     		window.localStorage.setItem('nickname',s.nickname);
+	     		window.localStorage.setItem(key, s.openid);
+	     	}
+	     }) */
 
 						//var URI = window.location.href.split('#')[0];
 
@@ -22452,7 +22437,7 @@
 /* 16 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<div class=\"lt-full zmiti-index-main-ui \"  :class=\"{'show':show}\">\r\n\t\t<div class=\"zmiti-title\">\r\n\t\t\t<div class=\"zmiti-index-logo\">\r\n\t\t\t\t<img :src=\"imgs.logo\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<img @touchstart='imgStart' :src=\"imgs.title\">\r\n\t\t</div>\r\n\t\t<div class=\"zmiti-nav\">\r\n\t\t\t<ul>\r\n\t\t\t\t<li v-for=\"(menu,i) in menus\" :key=\"i\" v-tap='[menuClick,i]'>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :style=\"{width:menu.width}\" :src=\"menu.defaultImg\" alt=\"\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div :class=\"menu.class\">{{menu.name}}</div>\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\r\n\t\t<section class=\"lt-full zmiti-qd-mask\" v-show='showQD'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qiandaoBg\" alt=\"\">\r\n\t\t\t\t<div class=\"zmiti-qd-info\">\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t请打开微信扫一扫\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t扫描签到二维码即可成功签到\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[close]'>关 闭</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n";
+	module.exports = "\r\n\t<div class=\"lt-full zmiti-index-main-ui \"  :class=\"{'show':show}\">\r\n\t\t<div class=\"zmiti-title\">\r\n\t\t\t<div class=\"zmiti-index-logo\">\r\n\t\t\t\t<img :src=\"imgs.logo\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<img @touchstart='imgStart' :src=\"imgs.title\">\r\n\t\t</div>\r\n\t\t<div class=\"zmiti-nav\">\r\n\t\t\t<ul>\r\n\t\t\t\t<li v-for=\"(menu,i) in menus\" :key=\"i\" v-tap='[menuClick,i]'>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :style=\"{width:menu.width}\" :src=\"menu.defaultImg\" alt=\"\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div :class=\"menu.class\">{{menu.name}}</div>\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\r\n\t\t<section class=\"lt-full zmiti-qd-mask\" v-show='showQD'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qiandaoBg\" alt=\"\">\r\n\t\t\t\t<div class=\"zmiti-qd-info\">\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t请打开微信扫一扫\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t扫描签到二维码即可成功签到\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[close]'>关 闭</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\r\n\t\t<div v-if='mynumberinfo' class=\"lt-full zmiti-num-mask\">\r\n\t\t\t<div>\r\n\t\t\t\t<div class=\"zmiti-number\">{{mynumberinfo}}</div>\r\n\t\t\t\t<div class=\"zmiti-number\" style=\"text-align:center;\">{{mynumber}}</div>\r\n\t\t\t\t<div class=\"zmiti-btn\" v-tap='[closeInfo]'>关 闭</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n";
 
 /***/ }),
 /* 17 */
@@ -22515,11 +22500,22 @@
 	// 				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入手机号码"/>
 	// 			</div>
 	//
-	// 			<div v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
+	// 			<div v-if='showBtn' v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 	// 				提交
 	// 			</div>
 	//
 	// 			<Toast :msg='msg' :errorMsg='errorMsg'></Toast>
+	//
+	// 			<div v-if='showMsg' class="lt-full zmiti-msg-mask">
+	// 				<div>
+	// 					<div class="zmiti-number">
+	// 						<div>
+	// 							{{showMsg}}
+	// 						</div>
+	// 					</div>
+	// 					<div class="zmiti-btn" v-tap='[closeInfo]'>关 闭</div>
+	// 				</div>
+	// 			</div>
 	// 		</div>
 	//
 	//
@@ -22558,8 +22554,9 @@
 			return {
 				imgs: _libAssetsJs.imgs,
 				showTeam: false,
-				show: false,
+				show: true,
 				msg: "",
+				showMsg: '',
 				errorMsg: '',
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
@@ -22573,7 +22570,8 @@
 					provicename: '',
 					mobile: ''
 				},
-				provinceList: ["北京", "安徽", "福建", "甘肃", "广东", "广西", "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南", "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西", "陕西", "上海", "四川", "天津", "西藏", "新疆", "云南", "浙江", "重庆"]
+				provinceList: ["北京", "安徽", "福建", "甘肃", "广东", "广西", "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南", "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西", "陕西", "上海", "四川", "天津", "西藏", "新疆", "兵团", "云南", "浙江", "重庆"],
+				showBtn: true
 			};
 		},
 
@@ -22605,13 +22603,24 @@
 					data: data,
 					success: function success(data) {
 						if (data.getret === 0) {
-							s.msg = '提交成功';
+							//s.msg = '提交成功';
 							s.errorMsg = '';
 
-							setTimeout(function () {
-								s.msg = '';
-								s.show = false;
-							}, 2000);
+							s.showMsg = '你已经成功提交信息，请等待后台审核。';
+
+							_jquery2['default'].ajax({
+								url: window.baseUrl + '/share/wmsendsms/',
+								type: 'post',
+								data: {
+									mobile: s.formUser.mobile,
+									smstype: 1, //1.报名成功短信,2.审核通过短信,3.审核未通过短信
+									username: s.formUser.username,
+									projectname: document.title,
+									getdate: '2018年8月14日至2018年8月14日16日'
+								},
+								error: function error() {},
+								success: function success(data) {}
+							});
 						} else {
 							s.errorMsg = data.getmsg;
 							s.msg = '';
@@ -22621,6 +22630,9 @@
 						}
 					}
 				});
+			},
+			closeInfo: function closeInfo() {
+				this.showMsg = '';
 			}
 
 		},
@@ -22630,34 +22642,64 @@
 
 			window.s = this;
 
-			/* $.ajax({
-	  	url:window.baseUrl+'/wenming/getsignuplist/',
-	  	type:'post',
-	  	data:{
-	  		type:1,
-	  		name:"",
-	  		status:1					
-	  	},
-	  	success(data){
-	  		console.log(data);
-	  	}
-	  }) */
 			var obserable = this.obserable;
 
 			obserable.on('showForm', function () {
 				_this2.show = true;
 			});
-			/*$.ajax({
-	  	url:window.baseUrl+'/wenming/signin/',
-	  	type:'post',
-	  	data:{
-	  		wxopenid:'1',
-	  		pnumber:1
-	  	},
-	  	success(data){
-	  		console.log(data);
-	  	}
-	  	})*/
+
+			obserable.on('hideForm', function () {
+				_this2.show = false;
+			});
+
+			var s = this;
+			var t = setInterval(function () {
+
+				if (window.openid) {
+					clearInterval(t);
+					_jquery2['default'].ajax({
+						url: window.baseUrl + '/wenming/getsignuplist/',
+						type: 'post',
+						data: {
+							wxopenid: window.openid
+						},
+						error: function error() {},
+						success: function success(data) {
+							if (data.getret === 0) {
+								if (data.list.length <= 0) {
+									return;
+								}
+								s.userinfo = data.list[0];
+
+								if (s.userinfo.issign) {
+									//已签到
+									obserable.trigger({
+										type: 'toggleIndex',
+										data: {
+											show: true
+										}
+									});
+									s.show = false;
+								}
+								if (s.userinfo.status * 1 === 0) {
+									s.showMsg = '你已经成功提交信息，请等待后台审核！';
+								} else if (s.userinfo.status * 1 === 1) {
+									s.showMsg = '你已通过后台审核，请到现在签到！';
+								}
+
+								s.formUser = {};
+							}
+						}
+					});
+				}
+			}, 30);
+
+			window.onresize = function () {
+
+				setTimeout(function () {
+					_this2.showBtn = window.innerHeight >= _this2.viewH;
+				}, 10);
+			};
 		}
 
 	};
@@ -22700,7 +22742,7 @@
 
 
 	// module
-	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-form-main-ui {\n  overflow: hidden;\n  background: #f3f3f4;\n  opacity: 0;\n  z-index: -1;\n  position: fixed !important;\n}\n\n.zmiti-form-main-ui.show {\n  opacity: 1;\n  z-index: 202;\n}\n\n.zmiti-form-main-ui .zmiti-form-item {\n  background: #fff;\n  padding-left: 20px;\n  height: 100px;\n  color: #777777;\n  line-height: 100px;\n  position: relative;\n}\n\n.zmiti-form-main-ui .zmiti-form-item:before {\n  content: \"\";\n  width: 730px;\n  height: 1px;\n  position: absolute;\n  background: #f5f5f5;\n  left: 20px;\n  bottom: 0;\n}\n\n.zmiti-form-main-ui .zmiti-form-item span {\n  margin-left: 65px;\n  color: #000;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input {\n  margin-left: 40px;\n  width: 510px;\n  height: 50px;\n  outline: none;\n  font-size: 30px;\n  border: none;\n  position: absolute;\n  top: 20px;\n  left: 100px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input::-webkit-input-placeholder {\n  color: #dddddd;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select:after {\n  content: attr(data-content);\n  color: #dddddd;\n  position: absolute;\n  left: 155px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select label:before {\n  content: \"\";\n  width: 24px;\n  height: 24px;\n  border: 2px solid #ccc;\n  position: absolute;\n  right: 60px;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-left: none;\n  border-bottom: none;\n  top: 30px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item select {\n  outline: none;\n  font-size: 28px;\n  width: 80%;\n  height: 100%;\n  left: 100px;\n  top: 0;\n  opacity: 0;\n  z-index: 100;\n  position: absolute;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: fixed;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n@-webkit-keyframes ar {\n  from {\n    margin-top: -5px;\n  }\n  to {\n    margin-top: 5px;\n  }\n}\n", ""]);
+	exports.push([module.id, ".lt-full {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n\n.zmiti-text-overflow {\n  overflow: hidden;\n  white-space: nowrap;\n  word-break: break-all;\n  text-overflow: ellipsis;\n  -webkit-text-overflow: ellipsis;\n}\n\n.zmiti-play {\n  width: .8rem;\n  height: .8rem;\n  border-radius: 50%;\n  position: fixed;\n  z-index: 1000;\n  right: .5rem;\n  top: .5rem;\n}\n\n.zmiti-play.rotate {\n  -webkit-animation: rotate 5s linear infinite;\n  animation: rotate 5s linear infinite;\n}\n\n@-webkit-keyframes rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n.zmiti-form-main-ui {\n  overflow: hidden;\n  background: #f3f3f4;\n  opacity: 0;\n  z-index: -1;\n  position: absolute !important;\n}\n\n.zmiti-form-main-ui.show {\n  opacity: 1;\n  z-index: 202;\n}\n\n.zmiti-form-main-ui .zmiti-msg-mask {\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  height: 100% !important;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: horizontal;\n}\n\n.zmiti-form-main-ui .zmiti-msg-mask > div {\n  position: relative;\n  min-width: 500px;\n  max-width: 600px;\n  min-height: 280px;\n  background: #fff;\n  border-radius: 8px;\n  overflow: hidden;\n}\n\n.zmiti-form-main-ui .zmiti-msg-mask > div div.zmiti-number {\n  color: #999;\n  display: -webkit-box;\n  -webkit-box-align: center;\n  -webkit-box-pack: center;\n  -webkit-box-orient: horizontal;\n  height: 100%;\n  padding: 40px;\n  position: absolute;\n  width: 100%;\n  box-sizing: border-box;\n}\n\n.zmiti-form-main-ui .zmiti-msg-mask > div div.zmiti-number > div {\n  color: #f90;\n  margin-top: -100px;\n}\n\n.zmiti-form-main-ui .zmiti-msg-mask > div .zmiti-btn {\n  position: absolute;\n  width: 100%;\n  left: 0;\n}\n\n.zmiti-form-main-ui .zmiti-form-item {\n  background: #fff;\n  padding-left: 20px;\n  height: 100px;\n  color: #777777;\n  line-height: 100px;\n  position: relative;\n}\n\n.zmiti-form-main-ui .zmiti-form-item:before {\n  content: \"\";\n  width: 730px;\n  height: 1px;\n  position: absolute;\n  background: #f5f5f5;\n  left: 20px;\n  bottom: 0;\n}\n\n.zmiti-form-main-ui .zmiti-form-item span {\n  margin-left: 65px;\n  color: #000;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input {\n  margin-left: 40px;\n  width: 510px;\n  height: 50px;\n  outline: none;\n  font-size: 30px;\n  border: none;\n  position: absolute;\n  top: 20px;\n  left: 100px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item input::-webkit-input-placeholder {\n  color: #dddddd;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select:after {\n  content: attr(data-content);\n  color: #dddddd;\n  position: absolute;\n  left: 155px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item.select label:before {\n  content: \"\";\n  width: 24px;\n  height: 24px;\n  border: 2px solid #ccc;\n  position: absolute;\n  right: 60px;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n  border-left: none;\n  border-bottom: none;\n  top: 30px;\n}\n\n.zmiti-form-main-ui .zmiti-form-item select {\n  outline: none;\n  font-size: 28px;\n  width: 80%;\n  height: 100%;\n  left: 100px;\n  top: 0;\n  opacity: 0;\n  z-index: 100;\n  position: absolute;\n}\n\n.zmiti-btn {\n  width: 110%;\n  height: 90px;\n  line-height: 90px;\n  text-align: center;\n  position: absolute;\n  bottom: 0;\n  left: -5%;\n  color: #fff;\n  background-image: -webkit-linear-gradient(left, #fe6500, #f00000);\n}\n\n.zmiti-btn.active {\n  -webkit-transform-origin: bottom;\n  transform-origin: bottom;\n  -webkit-transform: scale(0.95);\n  transform: scale(0.95);\n}\n\n@-webkit-keyframes ar {\n  from {\n    margin-top: -5px;\n  }\n  to {\n    margin-top: 5px;\n  }\n}\n", ""]);
 
 	// exports
 
@@ -22773,7 +22815,7 @@
 /***/ (function(module, exports) {
 
 	// <template>
-	// 	<div class="zmiti-toast-main-ui" :class='{"hide":msg === "" && errorMsg === ""}'>
+	// 	<div class="zmiti-toast-main-ui" :class='{"hide":!msg && !errorMsg}'>
 	// 		<span :class="{'success':msg,'error':errorMsg}"></span>{{msg||errorMsg}}
 	// 	</div>
 	// </template>
@@ -22874,13 +22916,13 @@
 /* 25 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<div class=\"zmiti-toast-main-ui\" :class='{\"hide\":msg === \"\" && errorMsg === \"\"}'>\r\n\t\t<span :class=\"{'success':msg,'error':errorMsg}\"></span>{{msg||errorMsg}}\r\n\t</div>\r\n";
+	module.exports = "\r\n\t<div class=\"zmiti-toast-main-ui\" :class='{\"hide\":!msg && !errorMsg}'>\r\n\t\t<span :class=\"{'success':msg,'error':errorMsg}\"></span>{{msg||errorMsg}}\r\n\t</div>\r\n";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<transition name='main'>\r\n\t\t<div class=\"zmiti-form-main-ui lt-full\" :class=\"{'show':show}\">\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.baomingTitle\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">姓名</label><input placeholder=\"请填写姓名\" type=\"text\" v-model=\"formUser.username\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\"  :data-content=\"formUser.sex !== '' ? '' :'请选择性别'\">\r\n\t\t\t\t<label for=\"\">性别</label><select v-model=\"formUser.sex\">\r\n\t\t\t\t\t<option :value=\"1\">--请选择--</option>\r\n\t\t\t\t\t<option :value=\"1\">男</option>\r\n\t\t\t\t\t<option :value=\"0\">女</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">民族</label><input  v-model=\"formUser.nation\" placeholder=\"请输入民族 如：‘汉族’\" />\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">职务</label><input  v-model=\"formUser.job\" placeholder=\"请输入职务\"/>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\" :data-content=\"formUser.provicename !== '' ? '' :'请选择省份'\">\r\n\t\t\t\t<label for=\"\">省份</label>\r\n\t\t\t\t<select  v-model=\"formUser.provicename\">\r\n\t\t\t\t\t<option :value=\"p\" v-for='(p,i) in provinceList' :key=\"i\">{{p}}</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.provicename}}</span>\r\n\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">手机号</label><input  v-model=\"formUser.mobile\" placeholder=\"请输入手机号码\"/>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[submit]' class=\"zmiti-btn\" :class=\"{'active':isPress}\" @touchstart='isPress = true' @touchend='isPress = false'>\r\n\t\t\t\t提交\r\n\t\t\t</div>\r\n\r\n\t\t\t<Toast :msg='msg' :errorMsg='errorMsg'></Toast>\r\n\t\t</div>\r\n\t\r\n\t\r\n\t</transition>\r\n";
+	module.exports = "\r\n\t<transition name='main'>\r\n\t\t<div class=\"zmiti-form-main-ui lt-full\" :class=\"{'show':show}\">\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.baomingTitle\" alt=\"\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">姓名</label><input placeholder=\"请填写姓名\" type=\"text\" v-model=\"formUser.username\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\"  :data-content=\"formUser.sex !== '' ? '' :'请选择性别'\">\r\n\t\t\t\t<label for=\"\">性别</label><select v-model=\"formUser.sex\">\r\n\t\t\t\t\t<option :value=\"1\">--请选择--</option>\r\n\t\t\t\t\t<option :value=\"1\">男</option>\r\n\t\t\t\t\t<option :value=\"0\">女</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">民族</label><input  v-model=\"formUser.nation\" placeholder=\"请输入民族 如：‘汉族’\" />\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">职务</label><input  v-model=\"formUser.job\" placeholder=\"请输入职务\"/>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item select\" :data-content=\"formUser.provicename !== '' ? '' :'请选择省份'\">\r\n\t\t\t\t<label for=\"\">省份</label>\r\n\t\t\t\t<select  v-model=\"formUser.provicename\">\r\n\t\t\t\t\t<option :value=\"p\" v-for='(p,i) in provinceList' :key=\"i\">{{p}}</option>\r\n\t\t\t\t</select>\r\n\t\t\t\t<span>{{formUser.provicename}}</span>\r\n\r\n\t\t\t</div>\r\n\t\t\t<div class=\"zmiti-form-item\">\r\n\t\t\t\t<label for=\"\">手机号</label><input  v-model=\"formUser.mobile\" placeholder=\"请输入手机号码\"/>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-if='showBtn' v-tap='[submit]' class=\"zmiti-btn\" :class=\"{'active':isPress}\" @touchstart='isPress = true' @touchend='isPress = false'>\r\n\t\t\t\t提交\r\n\t\t\t</div>\r\n\r\n\t\t\t<Toast :msg='msg' :errorMsg='errorMsg'></Toast>\r\n\r\n\t\t\t<div v-if='showMsg' class=\"lt-full zmiti-msg-mask\">\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<div class=\"zmiti-number\">\r\n\t\t\t\t\t\t<div>\r\n\t\t\t\t\t\t\t{{showMsg}}\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[closeInfo]'>关 闭</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t\r\n\t</transition>\r\n";
 
 /***/ }),
 /* 27 */
@@ -22932,6 +22974,8 @@
 	// 					</div>
 	// 				</div>
 	// 			</div>
+	//
+	// 			<Toast :msg='msg'></Toast>
 	// 		</div>
 	//
 	// 	</transition>
@@ -22954,6 +22998,10 @@
 
 	var _iscroll2 = _interopRequireDefault(_iscroll);
 
+	var _toastToast = __webpack_require__(21);
+
+	var _toastToast2 = _interopRequireDefault(_toastToast);
+
 	var _jquery = __webpack_require__(15);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -22975,6 +23023,7 @@
 				showTeam: false,
 				showQrcode: false,
 				show: false,
+				msg: "",
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
 				showMasks: false,
@@ -22983,7 +23032,9 @@
 			};
 		},
 
-		components: {},
+		components: {
+			Toast: _toastToast2['default']
+		},
 		methods: {
 			restart: function restart() {
 				window.location.href = window.location.href.split('?')[0];
@@ -23014,6 +23065,15 @@
 			back: function back() {
 				this.show = false;
 				this.showQdSuccess = false;
+				this.obserable.trigger({
+					type: 'toggleIndex',
+					data: {
+						show: true
+					}
+				});
+				this.obserable.trigger({
+					type: 'hideForm'
+				});
 			}
 
 		},
@@ -23032,15 +23092,27 @@
 					},
 					success: function success(data) {
 						if (data.getret === 0) {
-
 							if (data.list.length <= 0) {
-
+								s.show = false;
+								obserable.trigger({
+									type: 'showForm'
+								});
 								return;
 							} else {
 								s.show = true;
 								if (!window.openid || data.list[0].status !== 1) {
-									//没有审核通过
+									//没有审核通过或者已经签到
 									s.show = false;
+								}
+								if (data.list[0].issign) {
+									s.msg = '你已签到';
+									s.show = false;
+									obserable.trigger({
+										type: 'toggleIndex',
+										data: {
+											show: true
+										}
+									});
 								}
 							}
 						}
@@ -25196,7 +25268,7 @@
 /* 32 */
 /***/ (function(module, exports) {
 
-	module.exports = "\r\n\t<transition name='main'>\r\n\t\r\n\t\t<div class=\"lt-full zmiti-signin-main-ui \" :class=\"{'show':show}\"  ref='page'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qd\" alt=\"\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[signin]' class=\"zmiti-qd-btn\" @touchstart='isPress = true' @touchend='isPress = false' :class=\"{'active':isPress}\">\r\n\t\t\t\t点击打卡\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"lt-full zmiti-signin-success\" v-if='showQdSuccess'>\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :src=\"imgs.success\" alt=\"\">\r\n\t\t\t\t\t\t<div style=\"height:30px;\"></div>\r\n\t\t\t\t\t\t<div>签到成功</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[back]'>\r\n\t\t\t\t\t\t返回\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\r\n\t</transition>\r\n";
+	module.exports = "\r\n\t<transition name='main'>\r\n\t\r\n\t\t<div class=\"lt-full zmiti-signin-main-ui \" :class=\"{'show':show}\"  ref='page'>\r\n\t\t\t<div>\r\n\t\t\t\t<img :src=\"imgs.qd\" alt=\"\">\r\n\t\t\t</div>\r\n\r\n\t\t\t<div v-tap='[signin]' class=\"zmiti-qd-btn\" @touchstart='isPress = true' @touchend='isPress = false' :class=\"{'active':isPress}\">\r\n\t\t\t\t点击打卡\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"lt-full zmiti-signin-success\" v-if='showQdSuccess'>\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<img :src=\"imgs.success\" alt=\"\">\r\n\t\t\t\t\t\t<div style=\"height:30px;\"></div>\r\n\t\t\t\t\t\t<div>签到成功</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"zmiti-btn\" v-tap='[back]'>\r\n\t\t\t\t\t\t返回\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<Toast :msg='msg'></Toast>\r\n\t\t</div>\r\n\t\r\n\t</transition>\r\n";
 
 /***/ }),
 /* 33 */
@@ -25355,7 +25427,7 @@
 			search: function search() {
 				var s = this;
 
-				this.$ref['keyword'].blur();
+				this.$refs['keyword'].blur();
 
 				_jquery2['default'].ajax({
 					url: window.baseUrl + '/wenming/getsignuplist/',

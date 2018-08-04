@@ -33,11 +33,22 @@
 				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入手机号码"/>
 			</div>
 
-			<div v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
+			<div v-if='showBtn' v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 				提交
 			</div>
 
 			<Toast :msg='msg' :errorMsg='errorMsg'></Toast>
+
+			<div v-if='showMsg' class="lt-full zmiti-msg-mask">
+				<div>
+					<div class="zmiti-number">
+						<div>
+							{{showMsg}}
+						</div>
+					</div>
+					<div class="zmiti-btn" v-tap='[closeInfo]'>关 闭</div>
+				</div>
+			</div>
 		</div>
 	
 	
@@ -59,8 +70,9 @@
 			return {
 				imgs,
 				showTeam: false,
-				show: false,
+				show: true,
 				msg:"",
+				showMsg:'',
 				errorMsg:'',
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
@@ -103,11 +115,15 @@
 					"天津",
 					"西藏",
 					"新疆",
+					"兵团",
 					"云南",
 					"浙江",
 					"重庆"
-				]
+				],
+				showBtn:true
 			}
+
+			
 		},
 	
 		components: {
@@ -137,13 +153,28 @@
 					 data:data,
 					 success(data){
 						 if(data.getret === 0){
-							 s.msg = '提交成功';
+							 //s.msg = '提交成功';
 							 s.errorMsg = '';
 
-							 setTimeout(() => {
-								s.msg = '';
-								s.show = false;
-							 }, 2000);
+							 s.showMsg = '你已经成功提交信息，请等待后台审核。'
+
+							 $.ajax({
+								 url:window.baseUrl+'/share/wmsendsms/',
+								 type:'post',
+								 data:{
+									 mobile:s.formUser.mobile,
+									 smstype:1,//1.报名成功短信,2.审核通过短信,3.审核未通过短信
+									 username:s.formUser.username,
+									 projectname:document.title,
+									 getdate:'2018年8月14日至2018年8月14日16日'
+								 },
+								 error(){
+								 },
+								 success(data){
+								 }
+							 })
+
+							 
 						 }else{
 							 s.errorMsg = data.getmsg;
 							 s.msg = '';
@@ -155,41 +186,77 @@
 					 }
 				 })
 				  
+			 },
+			 closeInfo(){
+				 this.showMsg = '';
 			 }
 			
 		},
 	
 		mounted() {
 			window.s = this;
-
-			/* $.ajax({
-				url:window.baseUrl+'/wenming/getsignuplist/',
-				type:'post',
-				data:{
-					type:1,
-					name:"",
-					status:1					
-				},
-				success(data){
-					console.log(data);
-				}
-			}) */
+ 
 			var {obserable} = this;
 			obserable.on('showForm',()=>{
 				this.show = true;
 			})
-			/*$.ajax({
-				url:window.baseUrl+'/wenming/signin/',
-				type:'post',
-				data:{
-					wxopenid:'1',
-					pnumber:1
-				},
-				success(data){
-					console.log(data);
-				}
 
-			})*/
+			obserable.on('hideForm',()=>{
+				this.show = false;
+			})
+			 
+			 
+			var  s= this;
+			var t = setInterval(()=>{
+				
+				if(window.openid){
+					clearInterval(t);
+					$.ajax({
+						url:window.baseUrl+'/wenming/getsignuplist/',
+						type:'post',
+						data:{
+							wxopenid:window.openid
+						},
+						error(){
+						},
+						success(data){
+							if(data.getret === 0 ){
+								if(data.list.length<=0){
+									return;
+								}
+								s.userinfo = data.list[0];
+
+								if(s.userinfo.issign){//已签到
+									obserable.trigger({
+										type:'toggleIndex',
+										data:{
+											show:true
+										}
+									})
+									s.show = false;
+								}
+								if(s.userinfo.status*1 === 0){
+									s.showMsg = '你已经成功提交信息，请等待后台审核！'
+									
+								}else if(s.userinfo.status*1 === 1){
+									s.showMsg = '你已通过后台审核，请到现在签到！'
+								}
+
+								s.formUser = {};
+
+							}
+						}
+					})
+				}
+			},30);
+
+
+			window.onresize = ()=>{
+
+				setTimeout(() => {
+					this.showBtn = window.innerHeight >=this.viewH;
+				}, 10);
+			}
 		}
 	
 	}

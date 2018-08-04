@@ -22,6 +22,8 @@
 					</div>
 				</div>
 			</div>
+
+			<Toast :msg='msg'></Toast>
 		</div>
 	
 	</transition>
@@ -38,6 +40,7 @@
 
 	import IScroll from 'iscroll';
 	
+	import Toast from '../toast/toast'
 	import $ from 'jquery';
 	
 	import zmitiUtil from '../lib/util';
@@ -55,6 +58,7 @@
 				showTeam: false,
 				showQrcode: false,
 				show: false,
+				msg:"",
 				viewW: window.innerWidth,
 				viewH: window.innerHeight,
 				showMasks: false,
@@ -64,6 +68,7 @@
 		},
 	
 		components: { 
+			Toast
 		},
 		methods: {
 			restart() {
@@ -95,6 +100,15 @@
 			back(){
 				this.show  = false;
 				this.showQdSuccess = false;
+				this.obserable.trigger({
+					type:'toggleIndex',
+					data:{
+						show:true
+					}
+				})
+				this.obserable.trigger({
+					type:'hideForm'
+				})
 
 			}
 			
@@ -107,30 +121,41 @@
 			var s = this;
 			obserable.on('showQD',()=>{
 
-
 				$.ajax({
-				url:window.baseUrl+'/wenming/getsignuplist/',
-				type:'post',
-				data:{
-					wxopenid:window.openid
-				},
-				success(data){
-					if(data.getret === 0 ){
-						
-						if(data.list.length<=0){
-
-							return;
-						}
-						else{
-							s.show = true;
-							if(!window.openid || data.list[0].status !== 1){//没有审核通过
+					url:window.baseUrl+'/wenming/getsignuplist/',
+					type:'post',
+					data:{
+						wxopenid:window.openid
+					},
+					success(data){
+						if(data.getret === 0 ){
+							if(data.list.length<=0){
 								s.show = false;
+								obserable.trigger({
+									type:'showForm'
+								})
+								return;
 							}
+							else{
+								s.show = true;
+								if(!window.openid || data.list[0].status !== 1){//没有审核通过或者已经签到
+									s.show = false;
+								}
+								if(data.list[0].issign){
+									s.msg = '你已签到';
+									s.show = false;
+									obserable.trigger({
+										type:'toggleIndex',
+										data:{
+											show:true
+										}
+									})
+								}
+							}
+							
 						}
-						 
+						console.log(data);
 					}
-					console.log(data);
-				}
 			})
 
 

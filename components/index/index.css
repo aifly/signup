@@ -58,7 +58,7 @@
 
 .zmiti-index-main-ui.show {
   opacity: 1;
-  z-index: 200;
+  z-index: 500;
 }
 
 .zmiti-index-main-ui .zmiti-index-logo {
@@ -102,6 +102,43 @@
   padding-top: 100px;
   color: #999999;
   box-sizing: border-box;
+}
+
+.zmiti-index-main-ui .zmiti-num-mask {
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  height: 100% !important;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+}
+
+.zmiti-index-main-ui .zmiti-num-mask > div {
+  position: relative;
+  min-width: 400px;
+  max-width: 600px;
+  min-height: 280px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.zmiti-index-main-ui .zmiti-num-mask > div div.zmiti-number {
+  margin: 22px;
+  color: #999;
+}
+
+.zmiti-index-main-ui .zmiti-num-mask > div div.zmiti-number:nth-of-type(2) {
+  font-size: 34px;
+  color: #f90;
+  font-weight: bold;
+}
+
+.zmiti-index-main-ui .zmiti-num-mask > div .zmiti-btn {
+  position: absolute;
+  width: 100%;
+  left: 0;
 }
 
 .zmiti-btn {

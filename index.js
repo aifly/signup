@@ -15,6 +15,8 @@ import './components/lib/touch.js'
 import vueTap from 'vue-js-tap';
 Vue.use(vueTap);
 
+import Toast from './components/toast/toast'
+
 //var VueTouch = im('vue-touch')
 /*import VueTouch from 'vue-touch';
 Vue.use(VueTouch, {name: 'v-touch'})*/
@@ -42,7 +44,9 @@ new Vue({
 		loaded: false,
 		nickname: '',
 		headimgurl: '',
+		isWeixin:false,
 		scale:"(1,1)",
+		errorMsg:'',
 		scaleStyle:{
 			WebkitTransform:'scale(1,1)'
 		},
@@ -61,19 +65,28 @@ new Vue({
 		<Main :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  v-if='show && !isShare'  :obserable='obserable'></Main>
 		*/
 		template: `<div>
-		<Signin :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Signin>
-		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Index>
-		<Form :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Form>
-		<Search :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Search>
-		<div  v-if='!loaded' :style='{background:"#fff"}' class='zmiti-loading lt-full'>
-			<div class='zmiti-loading-ui'>
-				<div>
-					<img src=${imgs.logo} />
-					<span :style = "scaleStyle" ></span>
+			<section v-if='isWeixin'>
+				<Signin :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Signin>
+				<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Index>
+				<Form :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Form>
+				<Search :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Search>
+				<div  v-if='!loaded' :style='{background:"#fff"}' class='zmiti-loading lt-full'>
+					<div class='zmiti-loading-ui'>
+						<div>
+							<img src=${imgs.logo} />
+							<span :style = "scaleStyle" ></span>
+						</div>
+						<div class='zmiti-progress'>{{width}}%</div>
+					</div>
 				</div>
-				<div class='zmiti-progress'>{{width}}%</div>
-			</div>
-		</div>
+
+			</section>
+
+			<section v-if='!isWeixin' class='lt-full'>
+				<Toast :errorMsg='errorMsg'></Toast>
+			</section>
+
+
 
 	
 	</div>`,
@@ -127,10 +140,15 @@ new Vue({
 		Index,
 		Form,
 		Signin,
-		Search
+		Search,
+		Toast
 	},
 	mounted() {
 
+		this.isWeixin = !window.isCheckWeixin || zmitiUtil.isWeiXin();
+		if (!zmitiUtil.isWeiXin() && window.isCheckWeixin) {
+			this.errorMsg = '请在微信中访问'
+		}
 		var s = this;
 
 		var keyword = (zmitiUtil.getQueryString('keyword'));

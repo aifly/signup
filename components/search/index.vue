@@ -78,7 +78,9 @@
 				show:false,
 				showTeam:false,
 				keyword:'',
-				userList:[]
+				userList:[
+					
+				]
 			}
 		},
 		components:{
@@ -109,7 +111,7 @@
 			search(){
 				var s = this;
 
-				this.$ref['keyword'].blur();
+				this.$refs['keyword'].blur();
 
 				$.ajax({
 					url:window.baseUrl+'/wenming/getsignuplist/',
