@@ -122,17 +122,17 @@ $bgColor: #ffffff;
 		li{
 		
 			display: inline-block;
-			margin:32px 44px;
+			margin:32px 50px;
 			min-width: 70px;
 			
 			text-align: center;
-			font-size:24px;
+			font-size:28px;
 			div{
 				color:#00496b;
 				margin: 2px auto;
 				&:nth-of-type(2){
 					height: 60px;
-					line-height: 80px;
+					line-height: 60px;
 				}
 			}
 			.grey{

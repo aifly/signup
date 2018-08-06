@@ -13,7 +13,7 @@
 					<option :value="1">男</option>
 					<option :value="0">女</option>
 				</select>
-				<span>{{formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''}}</span>
+				<input type="text" style='z-index:0' :value="formUser.sex === 1 ? '男':formUser.sex === 0 ? '女': ''" >
 			</div>
 			<div class="zmiti-form-item">
 				<label for="">民族</label><input  v-model="formUser.nation" placeholder="请输入民族 如：‘汉族’" />
@@ -26,11 +26,10 @@
 				<select  v-model="formUser.provicename">
 					<option :value="p" v-for='(p,i) in provinceList' :key="i">{{p}}</option>
 				</select>
-				<span>{{formUser.provicename}}</span>
-
+				<input type="text" style='z-index:0' :value="formUser.provicename" >
 			</div>
 			<div class="zmiti-form-item">
-				<label for="">手机号</label><input  v-model="formUser.mobile" placeholder="请输入手机号码"/>
+				<label for="">手机号</label><input ref='mobile' v-model="formUser.mobile" placeholder="请输入手机号码"/>
 			</div>
 
 			<div v-if='showBtn' v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
@@ -50,8 +49,6 @@
 				</div>
 			</div>
 		</div>
-	
-	
 	</transition>
 </template>
 
@@ -87,38 +84,39 @@
 					mobile:''
 				},
 				provinceList:[
+					"--请选择省份--",
 					"北京",
-					"安徽",
-					"福建",
-					"甘肃",
-					"广东",
-					"广西",
-					"贵州",
-					"海南",
-					"河北",
-					"河南",
-					"黑龙江",
-					"湖北",
-					"湖南",
-					"吉林",
-					"江苏",
-					"江西",
-					"辽宁",
-					"内蒙古",
-					"宁夏",
-					"青海",
-					"山东",
-					"山西",
-					"陕西",
-					"上海",
-					"四川",
 					"天津",
-					"西藏",
-					"新疆",
-					"兵团",
-					"云南",
-					"浙江",
-					"重庆"
+					"河北",
+					"山西",
+					"内蒙古",
+					"辽宁",
+					'吉林',
+					'黑龙江',
+					'上海',
+					'江苏',
+					'浙江',
+					'安徽',
+					'福建',
+					'江西',
+					'山东',
+					'河南',
+					'湖北',
+					'湖南',
+					'广东',
+					'广西',
+					'海南',
+					'重庆',
+					'四川',
+					'贵州',
+					'云南',
+					'西藏',
+					'陕西',
+					'甘肃',
+					'青海',
+					'宁夏',
+					'新疆',
+					'兵团'
 				],
 				showBtn:true
 			}
@@ -133,6 +131,8 @@
 			 submit(){
 
 				 var s = this;
+
+				 this.$refs['mobile'].blur();
 
 				 if(!s.formUser.username){
 					 this.errorMsg = '用户名不能用空';
@@ -215,7 +215,8 @@
 						url:window.baseUrl+'/wenming/getsignuplist/',
 						type:'post',
 						data:{
-							wxopenid:window.openid
+							wxopenid:window.openid,
+							
 						},
 						error(){
 						},
@@ -239,7 +240,7 @@
 									s.showMsg = '你已经成功提交信息，请等待后台审核！'
 									
 								}else if(s.userinfo.status*1 === 1){
-									s.showMsg = '你已通过后台审核，请到现在签到！'
+									s.showMsg = '你已通过后台审核，请到现场签到！'
 								}
 
 								s.formUser = {};

@@ -5,6 +5,7 @@
 				<img :src="imgs.logo" alt="">
 			</div>
 			<img @touchstart='imgStart' :src="imgs.title">
+			<span style="display:inline-block;font-size:32px;top:0px;text-indent:1em;position:relative">您好，{{userinfo.username}}</span>
 		</div>
 		<div class="zmiti-nav">
 			<ul>
@@ -60,69 +61,62 @@
 				showQD:false,//显示签到提示
 				menus:[
 					{
-						name:"报名",
-						img:imgs.baoming,
-						defaultImg:imgs.baoming,
-						img1:imgs.yibaoming,
-						width:'60px'
-					},{
-						name:"签到",
-						img:imgs.qiandao,
-						defaultImg:imgs.qiandao,
-						img1:imgs.qiandao1,
-						width:'65px'
-					},{
-						name:"须知",
+						name:"培训须知",
 						img:imgs.xuzhi,
 						defaultImg:imgs.xuzhi,
 						img1:imgs.xuzhi1,
-						width:'65px'
+						width:'65px',
+						href:"http://www.wenming.cn/specials/wmcj/2018term/xz/"
 					},{
-						name:"公告",
-						img:imgs.gonggao,
-						defaultImg:imgs.gonggao,
-						img1:imgs.gonggao1,
-						width:'65px'
-					},{
-						name:"住宿",
-						img:imgs.zhusu,
-						defaultImg:imgs.zhusu,
-						img1:imgs.zhusu1,
-						width:'68x'
-					},{
-						name:"课程",
+						name:"安排课程",
 						img:imgs.kecheng,
 						defaultImg:imgs.kecheng,
 						img1:imgs.kecheng1,
-						width:'54px'
+						width:'54px',
+						href:"http://www.wenming.cn/specials/wmcj/2018term/kcap/"
 					},{
-						name:"座位",
+						name:"新闻中心",
+						img:imgs.gonggao,
+						defaultImg:imgs.gonggao,
+						img1:imgs.gonggao1,
+						width:'65px',
+						href:'http://www.wenming.cn/specials/wmcj/2018term/news/'
+					},{
+						name:"我的房间",
+						img:imgs.zhusu,
+						defaultImg:imgs.zhusu,
+						img1:imgs.zhusu1,
+						width:'68px'
+					},{
+						name:"我的座位",
 						img:imgs.zuowei,
 						defaultImg:imgs.zuowei,
 						img1:imgs.zuowei1,
 						width:'60px'
 					},{
-						name:"交流",
+						name:"我的同学",
+						img:imgs.tongxunlu,
+						defaultImg:imgs.tongxunlu,
+						img1:imgs.zuowei1,
+						width:'60px'
+					},{
+						name:"经验交流",
 						img:imgs.jiaoliu,
 						defaultImg:imgs.jiaoliu,
 						img1:imgs.jiaoliu1,
-						width:'70px'
+						width:'50px',
+						href:'http://www.wenming.cn/specials/wmcj/2018term/jyjl/'
 					},{
-						name:"资料",
+						name:"文件汇编",
 						img:imgs.ziliao,
 						defaultImg:imgs.ziliao,
 						img1:imgs.ziliao1,
-						width:'60px'
-					}/* ,{
-						name:"通讯录",
-						img:imgs.tongxunlu,
-						defaultImg:imgs.tongxunlu,
-						img1:imgs.tongxunlu1,
-						width:'50px'
-					} */,{
-						name:"搜索",
-						img:imgs.sousuo,
-						defaultImg:imgs.sousuo,
+						width:'60px',
+						href:'http://www.wenming.cn/specials/wmcj/2018term/wjhb/'
+					},{
+						name:"我要求助",
+						img:imgs.qiuzhu,
+						defaultImg:imgs.qiuzhu,
 						img1:imgs.sousuo1,
 						width:'55px'
 					}
@@ -150,51 +144,38 @@
 				var {obserable } =this;
 				switch (index) {
 					case 0:
-						if(!this.isBaoMing){
-
-							obserable.trigger({
-								type:'showForm'
-							})
-						}
-						break;
-				
 					case 1://签到
-						if(!this.issign && this.isBaoMing){
-							this.showQD = true;
-						}
-					break;
 					case 2:
+					case 6:
+					case 7:
+					if(!window.openid){
+						return;
+					}
+					window.location.href = this.menus[index].href+'?openid='+window.openid;
 					break;
 					case 3:
+						this.mynumberinfo = '我的房间号是：'	
+						this.mynumber = this.userinfo.roomnumber||'未分配';
 					break;
 					case 4:
+						this.mynumberinfo = '我的座位号是：'	
+						this.mynumber = this.userinfo.seatnumber||'未分配';
 						
-						if(this.isBaoMing){
-
-							this.mynumberinfo = '我的房间号是：'	
-							this.mynumber = this.userinfo.roomnumber||'未分配';
-						}
+						
 					break;
 					case 5:
+						obserable.trigger({
+							type:'showSearch',
+							data:false
+						})
 					break;
-					case 6:
-						if(this.isBaoMing){
-							this.mynumberinfo = '我的座位号是：'	
-							this.mynumber = this.userinfo.seatnumber||'未分配';
-						}
-					break;
-					case 7:
+					
 					break;
 					case 8:
-					break;
-					case 9:
-					break;
-					case 10:
-					if(this.isBaoMing){
 						obserable.trigger({
-							type:'showSearch'
+							type:'showSearch',
+							data:true
 						})
-					}
 					break;
 				}
 			}
@@ -208,6 +189,23 @@
 			obserable.on('toggleIndex',(data)=>{
 				this.show = data.show;
 			});
+
+			var s = this;
+
+			$.ajax({
+				url:window.baseUrl+'/wenming/getsignuplist/',
+				type:'post',
+				data:{
+					wxopenid:window.openid
+				},
+				success(data){
+					if(data.getret === 0 ){
+						s.userinfo = data.list[0];
+						
+					}
+					console.log(data);
+				}
+		})
 
 		
 		

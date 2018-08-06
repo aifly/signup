@@ -1,32 +1,30 @@
 ﻿var imgs = {
 	play: './assets/images/play.png',
 	logo: './assets/images/logo.png',
-	baoming:'./assets/images/baoming.png',
-	yibaoming:'./assets/images/yibaoming.png',
+	//baoming:'./assets/images/baoming.png',
+	//yibaoming:'./assets/images/yibaoming.png',
 	gonggao:'./assets/images/gonggao.png',
-	gonggao1:'./assets/images/gonggao1.png',
-	jiaoliu:'./assets/images/jiaoliu.png',
-	jiaoliu1:'./assets/images/jiaoliu1.png',
+	//gonggao1:'./assets/images/gonggao1.png',
+	jiaoliu:'./assets/images/jiaoliu2.png',
 	kecheng:'./assets/images/kecheng.png',
-	kecheng1:'./assets/images/kecheng1.png',
-	qiandao:'./assets/images/qiandao.png',
-	qiandao1:'./assets/images/qiandao1.png',
+	//kecheng1:'./assets/images/kecheng1.png',
+	//qiandao:'./assets/images/qiandao.png',
+	//qiandao1:'./assets/images/qiandao1.png',
 	tongxunlu:'./assets/images/tongxunlu.png',
-	tongxunlu1:'./assets/images/tongxunlu1.png',
+	//tongxunlu1:'./assets/images/tongxunlu1.png',
 	xuzhi:'./assets/images/xuzhi.png',
-	xuzhi1:'./assets/images/xuzhi1.png',
+	//xuzhi1:'./assets/images/xuzhi1.png',
 	zhusu:'./assets/images/zhusu.png',
-	zhusu1:'./assets/images/zhusu1.png',
+	//zhusu1:'./assets/images/zhusu1.png',
 	ziliao:'./assets/images/ziliao.png',
-	ziliao1:'./assets/images/ziliao1.png',
+	//ziliao1:'./assets/images/ziliao1.png',
 	zuowei:'./assets/images/zuowei.png',
-	sousuo:'./assets/images/sousuo.png',
-	sousuo1:'./assets/images/sousuo1.png',
-	zuowei1:'./assets/images/zuowei1.png',
+	//sousuo:'./assets/images/sousuo.png',
 	success:'./assets/images/success.png',
+	qiuzhu:'./assets/images/qiuzhu.png',
 
 
-	title:'./assets/images/title.jpg',
+	title:'./assets/images/title1.jpg',
 	qd:'./assets/images/qd.jpg',
 	qiandaoBg:'./assets/images/qiandao-bg.png',
 	baomingTitle:'./assets/images/baoming-title.jpg',
@@ -53,6 +51,68 @@ var musics = {
 		loop:false
 	}
 };
+
+window.leaders = [{
+	"username": "董青",
+	"sex": 1,
+	"nation": "",
+	"job": "中央文明办中国文明网总编辑",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1117",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "周黎明",
+	"sex": 1,
+	"nation": "",
+	"job": "中央文明办中国文明网副总编辑",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1111",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "张其胜",
+	"sex": 1,
+	"nation": "",
+	"job": "中央文明办中国文明网编辑部主任",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1115",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "单长虹",
+	"sex": 0,
+	"nation": "",
+	"job": "中央文明办中国文明网编辑部副主任",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1109",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "周海刚",
+	"sex": 1,
+	"nation": "",
+	"job": "中央文明办中国文明网行政事务部干部",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1103",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "逯江楠",
+	"sex": 0,
+	"nation": "",
+	"job": "中央文明办中国文明网行政事务部编辑",
+	"province": "",
+	"mobile": "",
+	"roomnumber": "1010",
+	"status": "",
+	"seatnumber": ""
+}];
 
  (function () {
 

@@ -113,7 +113,8 @@
 }
 
 .zmiti-form-main-ui .zmiti-form-item span {
-  margin-left: 65px;
+  position: absolute;
+  left: 144px;
   color: #000;
 }
 
@@ -126,7 +127,7 @@
   border: none;
   position: absolute;
   top: 20px;
-  left: 100px;
+  left: 105px;
 }
 
 .zmiti-form-main-ui .zmiti-form-item input::-webkit-input-placeholder {
@@ -164,6 +165,14 @@
   opacity: 0;
   z-index: 100;
   position: absolute;
+}
+
+.zmiti-form-main-ui .zmiti-form-item label::after {
+  content: '*';
+  color: #f00;
+  position: absolute;
+  margin-top: 4px;
+  margin-left: 4px;
 }
 
 .zmiti-btn {

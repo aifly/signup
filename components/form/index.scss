@@ -70,7 +70,8 @@ $color: #fffb88;
 		}
 
 		span{
-			margin-left: 65px;
+			@include pos(a);
+			left: 144px;
 			color:#000;
 		}
 
@@ -81,15 +82,17 @@ $color: #fffb88;
 			outline: none;
 			font-size:30px;
 			border:none;
+			
 			@include pos(a);
 			top: 20px;
-			left: 100px;
+			left: 105px;
 			&::-webkit-input-placeholder{
 				color:#dddddd;
 			}
 		}
 
 		&.select{
+
 			&:after{
 				content:attr(data-content);
 				color:#dddddd;
@@ -120,6 +123,15 @@ $color: #fffb88;
 			z-index:100;
 			@include pos(a);
 			
+		}
+		label{
+			&::after{
+				content:'*';
+				color:#f00;
+				@include pos(a);
+				margin-top: 4px;
+				margin-left: 4px;
+			}
 		}
 	}
 

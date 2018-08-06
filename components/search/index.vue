@@ -2,7 +2,7 @@
 	<transition name="team">
 		<div class="lt-full zmiti-search-main-ui" :class="{'show':show}">
 			<div class="zmiti-search-result-C">
-				<header class="zmiti-search-header">
+				<header class="zmiti-search-header" v-if='showHeader'>
 					<div>
 						<span v-tap='[toggleSearchType]'>{{searchtype  ?'省份':'姓名'}}</span>
 						<ul>
@@ -73,6 +73,7 @@
 		data(){
 			return{
 				imgs,
+				showHeader:true,
 				searchtype:false,
 				isPress:false,
 				show:false,
@@ -135,11 +136,12 @@
 		},
 		mounted(){
 
-			
-
-			this.obserable.on('showSearch',()=>{
-			 
+			this.obserable.on('showSearch',(data)=>{
 				this.show = true;
+				if(data){
+					this.userList = window.leaders;
+					this.showHeader = false;
+				}
 				
 			})
 

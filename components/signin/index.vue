@@ -7,7 +7,7 @@
 			</div>
 
 			<div v-tap='[signin]' class="zmiti-qd-btn" @touchstart='isPress = true' @touchend='isPress = false' :class="{'active':isPress}">
-				点击打卡
+				点击签到
 			</div>
 
 			<div class="lt-full zmiti-signin-success" v-if='showQdSuccess'>
