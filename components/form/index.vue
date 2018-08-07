@@ -216,6 +216,7 @@
 						type:'post',
 						data:{
 							wxopenid:window.openid,
+							pnumber:window.pNumber
 							
 						},
 						error(){

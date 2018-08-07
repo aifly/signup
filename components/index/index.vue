@@ -68,7 +68,7 @@
 						width:'65px',
 						href:"http://www.wenming.cn/specials/wmcj/2018term/xz/"
 					},{
-						name:"安排课程",
+						name:"课程安排",
 						img:imgs.kecheng,
 						defaultImg:imgs.kecheng,
 						img1:imgs.kecheng1,
@@ -196,7 +196,8 @@
 				url:window.baseUrl+'/wenming/getsignuplist/',
 				type:'post',
 				data:{
-					wxopenid:window.openid
+					wxopenid:window.openid,
+					pnumber:window.pNumber
 				},
 				success(data){
 					if(data.getret === 0 ){

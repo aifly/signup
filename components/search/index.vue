@@ -120,7 +120,8 @@
 					data:{
 						type:(s.searchtype|0)+1,
 						name:s.keyword,
-						status:1
+						status:1,
+						pnumber:window.pNumber
 					},
 					success(data){
 						if(data.getret === 0 ){

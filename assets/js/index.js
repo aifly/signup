@@ -12151,7 +12151,7 @@
 					width: '65px',
 					href: "http://www.wenming.cn/specials/wmcj/2018term/xz/"
 				}, {
-					name: "安排课程",
+					name: "课程安排",
 					img: _libAssetsJs.imgs.kecheng,
 					defaultImg: _libAssetsJs.imgs.kecheng,
 					img1: _libAssetsJs.imgs.kecheng1,
@@ -12277,7 +12277,8 @@
 				url: window.baseUrl + '/wenming/getsignuplist/',
 				type: 'post',
 				data: {
-					wxopenid: window.openid
+					wxopenid: window.openid,
+					pnumber: window.pNumber
 				},
 				success: function success(data) {
 					if (data.getret === 0) {
@@ -22562,7 +22563,7 @@
 					provicename: '',
 					mobile: ''
 				},
-				provinceList: ["北京", "天津", "河北", "山西", "内蒙古", "辽宁", '吉林', '黑龙江', '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '兵团'],
+				provinceList: ["--请选择省份--", "北京", "天津", "河北", "山西", "内蒙古", "辽宁", '吉林', '黑龙江', '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '兵团'],
 				showBtn: true
 			};
 		},
@@ -22655,7 +22656,9 @@
 						url: window.baseUrl + '/wenming/getsignuplist/',
 						type: 'post',
 						data: {
-							wxopenid: window.openid
+							wxopenid: window.openid,
+							pnumber: window.pNumber
+
 						},
 						error: function error() {},
 						success: function success(data) {
@@ -25430,7 +25433,8 @@
 					data: {
 						type: (s.searchtype | 0) + 1,
 						name: s.keyword,
-						status: 1
+						status: 1,
+						pnumber: window.pNumber
 					},
 					success: function success(data) {
 						if (data.getret === 0) {
