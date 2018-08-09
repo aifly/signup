@@ -177,12 +177,10 @@ new Vue({
 						show:false
 					}
 				})
-				setTimeout(() => {
-
-					obserable.trigger({
-						type: 'showQD'
-					})
-				}, 400);
+				window.qd && obserable.trigger({
+					type: 'showQD'
+				})
+				
 			}
 		})
 
