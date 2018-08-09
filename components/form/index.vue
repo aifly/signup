@@ -21,6 +21,14 @@
 			<div class="zmiti-form-item">
 				<label for="">职务</label><input  v-model="formUser.job" placeholder="请输入职务"/>
 			</div>
+			<div class="zmiti-form-item">
+				<label for="">座机号</label><input ref='telphone' v-model="formUser.telphone" placeholder="请输入座机号码"/>
+			</div>
+
+			<div class="zmiti-form-item">
+				<label for="">邮箱</label><input ref='email' v-model="formUser.email" placeholder="请输入邮箱"/>
+			</div>
+
 			<div class="zmiti-form-item select" :data-content="formUser.provicename !== '' ? '' :'请选择省份'">
 				<label for="">省份</label>
 				<select  v-model="formUser.provicename">
@@ -31,6 +39,9 @@
 			<div class="zmiti-form-item">
 				<label for="">手机号</label><input ref='mobile' v-model="formUser.mobile" placeholder="请输入手机号码"/>
 			</div>
+
+
+
 
 			<div v-if='showBtn' v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 				提交
@@ -81,7 +92,9 @@
 					nation:'',
 					job:'',
 					provicename:'',
-					mobile:''
+					mobile:'',
+					telphone:'',
+					email:''
 				},
 				provinceList:[
 					"--请选择省份--",
@@ -116,7 +129,8 @@
 					'青海',
 					'宁夏',
 					'新疆',
-					'兵团'
+					'兵团',
+					'中国文明网'
 				],
 				showBtn:true
 			}
@@ -128,12 +142,17 @@
 			Toast
 		},
 		methods: {
+			regEmail(){
+				　var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+				return reg.test(this.formUser.email);
+			},
 			 submit(){
 
 				 var s = this;
 
 				 this.$refs['mobile'].blur();
 
+				 
 				 if(!s.formUser.username){
 					 this.errorMsg = '用户名不能用空';
 					 setTimeout(() => {
@@ -141,12 +160,29 @@
 					 }, 1000);
 					 return;
 				 }
+
+				  if(this.formUser.email.length <=0 ){
+				 	this.errorMsg = '邮箱不能为空';
+					 setTimeout(() => {
+						this.errorMsg = '';	 
+					 }, 1000);
+				 	return;
+				 }
+
+				 if(!this.regEmail()){
+				 	this.errorMsg = '邮箱格式错误';
+					 setTimeout(() => {
+						this.errorMsg = '';	 
+					 }, 1000);
+				 	return;
+				 }
 				 var data = this.formUser;
 				 if(!data.provicename){
 					 data.provicename = '北京';
 				 }
 				 data.wxopenid = window.openid || zmitiUtil.randomString();
 				 data.pnumber =  window.pNumber;
+				
 				 $.ajax({
 					 url:window.baseUrl+'/wenming/post_signup/',
 					 type:'post',

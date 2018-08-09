@@ -39,6 +39,12 @@
 									<label for="">职务 ：</label><span>{{user.job}}</span>
 								</div>
 								<div class='zmiti-user-item'>
+									<label for="">座机号 ：</label><span>{{user.telphone}}</span>
+								</div>
+								<div class='zmiti-user-item'>
+									<label for="">邮箱 ：</label><span>{{user.email}}</span>
+								</div>
+								<div class='zmiti-user-item'>
 									<label for="">省份 ：</label><span>{{user.provicename}}</span>
 								</div>
 								<div class='zmiti-user-item'>
@@ -47,6 +53,7 @@
 								<div class='zmiti-user-item'>
 									<label for="">房间 ：</label><span>{{user.roomnumber}}</span>
 								</div>
+
 								<div class='zmiti-user-item'>
 									<label for="">座位 ：</label><span>{{user.seatnumber}}</span>
 								</div>
@@ -107,7 +114,9 @@
 			},
 			back(){
 				this.show = false;
-				this.userList.length = 0;
+				if(this.showHeader){
+					this.userList.length = 0;
+				}
 			},
 			search(){
 				var s = this;
@@ -140,8 +149,11 @@
 			this.obserable.on('showSearch',(data)=>{
 				this.show = true;
 				if(data){
-					this.userList = window.leaders;
+					this.userList = window.leaders.concat([]);
 					this.showHeader = false;
+				}else{
+					this.userList.length = 0;
+					this.showHeader = true;
 				}
 				
 			})

@@ -171,7 +171,14 @@ new Vue({
 			s.show = true;
 			s.loaded = true;
 			if (keyword === 'qd') {
+				obserable.trigger({
+					type:'toggleIndex',
+					data:{
+						show:false
+					}
+				})
 				setTimeout(() => {
+
 					obserable.trigger({
 						type: 'showQD'
 					})
@@ -196,7 +203,7 @@ new Vue({
 
 		});
 		zmitiUtil.getOauthurl(obserable);
-		zmitiUtil.wxConfig(document.title, window.desc);
+		//zmitiUtil.wxConfig(document.title, window.desc);
 		this.updatePv();
 		return;
 		/*$.ajax({

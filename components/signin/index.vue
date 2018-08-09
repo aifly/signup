@@ -125,10 +125,12 @@
 					url:window.baseUrl+'/wenming/getsignuplist/',
 					type:'post',
 					data:{
-						wxopenid:window.openid
+						wxopenid:window.openid,
+						pnumber:window.pNumber
 					},
 					success(data){
 						if(data.getret === 0 ){
+
 							if(data.list.length<=0){
 								s.show = false;
 								obserable.trigger({
@@ -138,10 +140,30 @@
 							}
 							else{
 								s.show = true;
-								if(!window.openid || data.list[0].status !== 1){//没有审核通过或者已经签到
+								if( data.list[data.list.length-1].status*1 === 1 && !data.list[data.list.length-1].issign){
+									s.signin();
+
+									setTimeout(()=>{
+										s.back()
+									},2000)
+
+									return;
+
+								};
+								if(!window.openid || data.list[data.list.length-1].status*1 !== 1){//没有审核通过或者已经签到
 									s.show = false;
+									obserable.trigger({
+										type:'showForm'
+									})
+									obserable.trigger({
+										type:'toggleIndex',
+										data:{
+											show:false
+										}
+									})
+									return;
 								}
-								if(data.list[0].issign){
+								if(data.list[data.list.length-1].issign){
 									s.msg = '你已签到';
 									s.show = false;
 									obserable.trigger({

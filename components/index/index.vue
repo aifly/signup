@@ -58,6 +58,7 @@
 				viewW:window.innerWidth,
 				mynumber:"",
 				mynumberinfo:"",
+				userinfo:{},
 				showQD:false,//显示签到提示
 				menus:[
 					{
@@ -71,7 +72,6 @@
 						name:"课程安排",
 						img:imgs.kecheng,
 						defaultImg:imgs.kecheng,
-						img1:imgs.kecheng1,
 						width:'54px',
 						href:"http://www.wenming.cn/specials/wmcj/2018term/kcap/"
 					},{
@@ -212,16 +212,12 @@
 		
 			obserable.on('signin',()=>{
 				s.issign = true;
-				s.menus[1].defaultImg = s.menus[1].img1;
-				s.menus[1].name = '已签到';
-				s.menus[1].class = 'grey'
-
-				s.menus.forEach((item,i)=>{
+				/*s.menus.forEach((item,i)=>{
 					if(i>1){
 						item.defaultImg = item.img;
 						item.class = ''
 					}
-				});
+				});*/
 			})
 			 
 		}
