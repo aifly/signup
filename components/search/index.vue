@@ -25,7 +25,7 @@
 								<div>{{user.username}}</div>
 								<div :class="{'active':user.isdetail}">{{user.isdetail ? "收起":"查看详情"}}</div>
 							</header>
-							<section :style="{minHeight:user.isdetail?'560px':0,height:user.isdetail?'560px':0}">
+							<section :style="{minHeight:user.isdetail?'700px':0,height:user.isdetail?'700px':0}">
 								<div class='zmiti-user-item'>
 									<label for="">姓名 ：</label><span>{{user.username}}</span>
 								</div>

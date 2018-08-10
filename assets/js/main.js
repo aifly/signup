@@ -1,11 +1,18 @@
 var baseUrl = 'http://api.zmiti.com/v2';
 var wmUtil = {
+    changeURLPar: function (url, arg, val) {
+        var pattern = arg + '=([^&]*)';
+        var replaceText = arg + '=' + val;
+        return url.match(pattern) ? url.replace(eval('/(' + arg + '=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url + '&' + replaceText : url + '?' + replaceText);
+    },
     init:function () {
 
         if (!this.isWeiXin()){
             $('body').html('<h1>请在微信中打开</h1>');
             return;
         }
+
+        var s = this;
 
         var openid = this.getQueryString('openid');
         if(!openid){
@@ -15,7 +22,8 @@ var wmUtil = {
             url: baseUrl + '/wenming/getsignuplist/',
             type: 'post',
             data: {
-                wxopenid: openid
+                wxopenid: openid,
+                pnumber:1
             },
             success:function (data) {
                 if(data.getret === 0){
@@ -25,6 +33,11 @@ var wmUtil = {
                     if(data.list[0].status !== 1){
                         window.location.href = 'http://h5.zmiti.com/public/signup/index.html'
                     }
+
+                    $('a').each(function(){
+                        $(this).attr('href', s.changeURLPar($(this).attr('href'),'openid',openid))
+                    })
+                    
                 }
             }
         })

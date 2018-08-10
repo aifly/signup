@@ -55,7 +55,7 @@ var musics = {
 window.leaders = [{
 	"username": "董青",
 	"sex": 1,
-	"nation": "",
+	"nation": "汉",
 	"job": "中央文明办中国文明网总编辑",
 	"province": "",
 	"mobile": "",
@@ -65,7 +65,7 @@ window.leaders = [{
 }, {
 	"username": "周黎明",
 	"sex": 1,
-	"nation": "",
+	"nation": "汉",
 	"job": "中央文明办中国文明网副总编辑",
 	"province": "",
 	"mobile": "",
@@ -75,45 +75,94 @@ window.leaders = [{
 }, {
 	"username": "张其胜",
 	"sex": 1,
-	"nation": "",
+	"nation": "汉",
 	"job": "中央文明办中国文明网编辑部主任",
 	"province": "",
-	"mobile": "",
+	"mobile": "13501350269",
 	"roomnumber": "1115",
-	"status": "",
-	"seatnumber": ""
-}, {
-	"username": "单长虹",
-	"sex": 0,
-	"nation": "",
-	"job": "中央文明办中国文明网编辑部副主任",
-	"province": "",
-	"mobile": "",
-	"roomnumber": "1109",
 	"status": "",
 	"seatnumber": ""
 }, {
 	"username": "周海刚",
 	"sex": 1,
-	"nation": "",
-	"job": "中央文明办中国文明网行政事务部干部",
+	"nation": "汉",
+	"job": "中央文明办中国文明网干部",
 	"province": "",
-	"mobile": "",
+	"mobile": "18511582283",
 	"roomnumber": "1103",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "简福海",
+	"sex": 1,
+	"nation": "汉",
+	"job": "中央文明办中国文明网干部",
+	"province": "",
+	"mobile": "13615011866",
+	"roomnumber": "1118",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "邓植尹",
+	"sex": 1,
+	"nation": "壮",
+	"job": "中国文明网宣传活动部副主任",
+	"province": "",
+	"mobile": "13811396079",
+	"roomnumber": "1118",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "张殊凡",
+	"sex": 0,
+	"nation": "汉",
+	"job": "中国文明网综合新闻组编辑",
+	"province": "",
+	"mobile": "13581771529",
+	"roomnumber": "1106",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "桑小婷",
+	"sex": 0,
+	"nation": "汉",
+	"job": "中国文明网网络文明传播组编辑",
+	"province": "",
+	"mobile": "13810706817",
+	"roomnumber": "1106",
 	"status": "",
 	"seatnumber": ""
 }, {
 	"username": "逯江楠",
 	"sex": 0,
-	"nation": "",
-	"job": "中央文明办中国文明网行政事务部编辑",
+	"nation": "满",
+	"job": "中国文明网编辑",
 	"province": "",
-	"mobile": "",
-	"roomnumber": "1010",
+	"mobile": "15811273878",
+	"roomnumber": "1102",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "荣  毅",
+	"sex": 0,
+	"nation": "汉",
+	"job": "中国文明网编辑",
+	"province": "",
+	"mobile": "15010143678",
+	"roomnumber": "1110",
+	"status": "",
+	"seatnumber": ""
+}, {
+	"username": "朱丽晨",
+	"sex": 0,
+	"nation": "汉",
+	"job": "中国文明网编辑",
+	"province": "",
+	"mobile": "15120029960",
+	"roomnumber": "1110",
 	"status": "",
 	"seatnumber": ""
 }];
-
  (function () {
 
  	if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {

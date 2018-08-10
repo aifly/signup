@@ -11,6 +11,30 @@ $bgColor: #ffffff;
 	background: $bgColor;
 	@include displayBox(vertical);
 
+	.zmiti-tips{
+		@include displayBox(horizontal);
+		&>div{
+			&:nth-of-type(1){
+				color:#ee0000;
+			}
+			&:nth-of-type(2){
+				overflow: hidden;
+				div{
+					@include animation(move linear 10s infinite);
+				}
+			}
+		}
+
+		@-webkit-keyframes move{
+			from{
+				-webkit-transform:translate(100%,0);
+			}
+			to{
+				
+				-webkit-transform:translate(-100%,0);
+			}
+		}
+	}
 	&>div{
 		-webkit-box-flex:1;
 		width: 100%;

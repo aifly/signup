@@ -50,6 +50,35 @@
   z-index: -1;
 }
 
+.zmiti-index-main-ui .zmiti-tips {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+}
+
+.zmiti-index-main-ui .zmiti-tips > div:nth-of-type(1) {
+  color: #ee0000;
+}
+
+.zmiti-index-main-ui .zmiti-tips > div:nth-of-type(2) {
+  overflow: hidden;
+}
+
+.zmiti-index-main-ui .zmiti-tips > div:nth-of-type(2) div {
+  -webkit-animation: move linear 10s infinite;
+  animation: move linear 10s infinite;
+}
+
+@-webkit-keyframes move {
+  from {
+    -webkit-transform: translate(100%, 0);
+  }
+  to {
+    -webkit-transform: translate(-100%, 0);
+  }
+}
+
 .zmiti-index-main-ui > div {
   -webkit-box-flex: 1;
   width: 100%;

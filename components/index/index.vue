@@ -5,7 +5,13 @@
 				<img :src="imgs.logo" alt="">
 			</div>
 			<img @touchstart='imgStart' :src="imgs.title">
-			<span style="display:inline-block;font-size:32px;top:0px;text-indent:1em;position:relative">您好，{{userinfo.username}}</span>
+			<span style="display:inline-block;font-size:32px;top:-30px;text-indent:2em;position:relative">您好，{{userinfo.username}}</span>
+			<div class="zmiti-tips">
+				<div>温馨提示：</div>
+				<div>
+					<div>请及时收藏本页面，方便下次使用。</div>
+				</div>
+			</div>
 		</div>
 		<div class="zmiti-nav">
 			<ul>
