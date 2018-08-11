@@ -177,7 +177,7 @@ new Vue({
 						show:false
 					}
 				})
-				window.qd && obserable.trigger({
+				obserable.trigger({
 					type: 'showQD'
 				})
 				
