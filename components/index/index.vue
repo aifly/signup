@@ -66,67 +66,7 @@
 				mynumberinfo:"",
 				userinfo:{},
 				showQD:false,//显示签到提示
-				menus:[
-					{
-						name:"培训须知",
-						img:imgs.xuzhi,
-						defaultImg:imgs.xuzhi,
-						img1:imgs.xuzhi1,
-						width:'65px',
-						href:"http://www.wenming.cn/specials/wmcj/2018term/xz/"
-					},{
-						name:"课程安排",
-						img:imgs.kecheng,
-						defaultImg:imgs.kecheng,
-						width:'54px',
-						href:"http://www.wenming.cn/specials/wmcj/2018term/kcap/"
-					},{
-						name:"新闻中心",
-						img:imgs.gonggao,
-						defaultImg:imgs.gonggao,
-						img1:imgs.gonggao1,
-						width:'65px',
-						href:'http://www.wenming.cn/specials/wmcj/2018term/news/'
-					},{
-						name:"我的房间",
-						img:imgs.zhusu,
-						defaultImg:imgs.zhusu,
-						img1:imgs.zhusu1,
-						width:'68px'
-					},{
-						name:"我的座位",
-						img:imgs.zuowei,
-						defaultImg:imgs.zuowei,
-						img1:imgs.zuowei1,
-						width:'60px'
-					},{
-						name:"我的同学",
-						img:imgs.tongxunlu,
-						defaultImg:imgs.tongxunlu,
-						img1:imgs.zuowei1,
-						width:'60px'
-					},{
-						name:"经验交流",
-						img:imgs.jiaoliu,
-						defaultImg:imgs.jiaoliu,
-						img1:imgs.jiaoliu1,
-						width:'50px',
-						href:'http://www.wenming.cn/specials/wmcj/2018term/jyjl/'
-					},{
-						name:"文件汇编",
-						img:imgs.ziliao,
-						defaultImg:imgs.ziliao,
-						img1:imgs.ziliao1,
-						width:'60px',
-						href:'http://www.wenming.cn/specials/wmcj/2018term/wjhb/'
-					},{
-						name:"我要求助",
-						img:imgs.qiuzhu,
-						defaultImg:imgs.qiuzhu,
-						img1:imgs.sousuo1,
-						width:'55px'
-					}
-				],
+				menus:window.menus,
 				
 			}
 		},

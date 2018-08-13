@@ -130,7 +130,7 @@
 					},
 					success(data){
 						if(data.getret === 0 ){
-
+							
 							if(data.list.length<=0){
 								s.show = false;
 								obserable.trigger({

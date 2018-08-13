@@ -202,7 +202,7 @@
 									 smstype:1,//1.报名成功短信,2.审核通过短信,3.审核未通过短信
 									 username:s.formUser.username,
 									 projectname:document.title,
-									 getdate:'2018年8月14日至2018年8月14日16日'
+									 getdate:window.getdate
 								 },
 								 error(){
 								 },

@@ -4,11 +4,12 @@
 			<div class="zmiti-search-result-C">
 				<header class="zmiti-search-header" v-if='showHeader'>
 					<div>
-						<span v-tap='[toggleSearchType]'>{{searchtype  ?'省份':'姓名'}}</span>
-						<ul>
-							<li>省份</li>
-							<li>姓名</li>
-						</ul>
+						<span>{{where===0?'姓名':where===1?'省份':'责任人'}}</span>
+						<select class="zmiti-where" v-model="where">
+							<option :value="0">姓名</option>
+							<option :value="1">省份</option>
+							<option :value="2">责任人</option>
+						</select>
 					</div>
 					<div>
 						
@@ -22,7 +23,7 @@
 					<ul>
 						<li v-for='(user,i) in userList' :key="i">
 							<header v-tap='[toggleUser,user]'>
-								<div>{{user.username}}</div>
+								<div>{{user.username}} <span>{{user.provicename}}</span>	 </div>
 								<div :class="{'active':user.isdetail}">{{user.isdetail ? "收起":"查看详情"}}</div>
 							</header>
 							<section :style="{minHeight:user.isdetail?'700px':0,height:user.isdetail?'700px':0}">
@@ -84,6 +85,7 @@
 				searchtype:false,
 				isPress:false,
 				show:false,
+				where:0,
 				showTeam:false,
 				keyword:'',
 				userList:[
@@ -95,9 +97,7 @@
 		},
 		
 		methods:{
-			toggleSearchType(){
-				this.searchtype = !this.searchtype;
-			},
+			 
 			toggleUser(user){
 				var s = this;
 				user.isdetail = !user.isdetail;
@@ -122,12 +122,12 @@
 				var s = this;
 
 				this.$refs['keyword'].blur();
-
+				var type = s.where === 0 || s.where === 2 ? 1 : 2
 				$.ajax({
 					url:window.baseUrl+'/wenming/getsignuplist/',
 					type:'post',
 					data:{
-						type:(s.searchtype|0)+1,
+						type:type,
 						name:s.keyword,
 						status:1,
 						pnumber:window.pNumber
@@ -135,8 +135,18 @@
 					success(data){
 						if(data.getret === 0 ){
 							s.userList = data.list;
+							if(s.where === 2){//责任人查询
+								s.userList = s.userList.filter((user)=>{
+									return user.username.indexOf('*')>-1
+								})
+							}
+							setTimeout(() => {
+								s.scroll.refresh();
+							}, 10);
+
+							
 						}
-						console.log(data);
+						
 					}
 				})
 			
@@ -144,16 +154,41 @@
 
 			
 		},
+		watch:{
+			where(val){
+				this.search();
+			}
+		},
 		mounted(){
 
+			var s = this;
 			this.obserable.on('showSearch',(data)=>{
 				this.show = true;
 				if(data){
 					this.userList = window.leaders.concat([]);
 					this.showHeader = false;
 				}else{
-					this.userList.length = 0;
+					//this.userList.length = 0;
 					this.showHeader = true;
+
+					$.ajax({
+						url:window.baseUrl+'/wenming/getsignuplist/',
+						type:'post',
+						data:{
+							status:1,
+							pnumber:window.pNumber
+						},
+						success(data){
+							
+							if(data.getret === 0 ){
+								s.userList = data.list;
+								setTimeout(() => {
+									s.scroll.refresh();
+								}, 10);
+							}
+						}
+					})
+
 				}
 				
 			})

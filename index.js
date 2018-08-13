@@ -170,16 +170,20 @@ new Vue({
 		}, () => {
 			s.show = true;
 			s.loaded = true;
+			
 			if (keyword === 'qd') {
 				obserable.trigger({
 					type:'toggleIndex',
 					data:{
 						show:false
 					}
-				})
-				obserable.trigger({
-					type: 'showQD'
-				})
+				});
+
+				setTimeout(() => {
+					obserable.trigger({
+						type: 'showQD'
+					})
+				}, 100);
 				
 			}
 		})
