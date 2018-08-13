@@ -106,7 +106,7 @@ window.leaders = [{
 	"username": "邓植尹",
 	"sex": 1,
 	"nation": "壮",
-	"job": "中国文明网宣传活动部副主任",
+	"job": "中国文明网编辑部副主任",
 	"province": "",
 	"mobile": "13811396079",
 	"roomnumber": "1118",
