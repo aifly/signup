@@ -39,6 +39,8 @@
 window.pNumber = 1; //第一期
 window.getdate = '2018年8月14日至2018年8月14日16日';
 
+window.isNeedWXTips = true;
+
 window.menus = [{
 	name: "培训须知",
 	img: imgs.xuzhi,

@@ -4,6 +4,9 @@
 			<div>
 				<img :src="imgs.baomingTitle" alt="">
 			</div>
+			<div v-if='headimgurl' class="zmiti-wx-tip">
+				<img :src="headimgurl" alt="" /> <span>{{nickname}} 请确保些微信是您本人的微信,否则后期无法签到!</span>
+			</div>
 			<div class="zmiti-form-item">
 				<label for="">姓名</label><input placeholder="请填写姓名" type="text" v-model="formUser.username">
 			</div>
@@ -41,8 +44,6 @@
 			</div>
 
 
-
-
 			<div v-if='showBtn' v-tap='[submit]' class="zmiti-btn" :class="{'active':isPress}" @touchstart='isPress = true' @touchend='isPress = false'>
 				提交
 			</div>
@@ -72,7 +73,7 @@
 	import $ from 'jquery';
 	import Toast from '../toast/toast'
 	export default {
-		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
+		props: ['obserable',],
 		name: 'zmitiindex',
 		data() {
 			return {
@@ -86,6 +87,8 @@
 				viewH: window.innerHeight,
 				showMasks: false,
 				isPress:false,
+				nickname:'fly',
+				headimgurl:'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKbnW4CtREqdY27y7CTbqhOhDT3tcpPUicqPnaZOpNLodfCW9Tcbd7gbB2NzyzyWeibmbCWaiaQrsdg/0',
 				formUser:{
 					username:'',
 					sex:'',
@@ -239,6 +242,11 @@
 
 			obserable.on('hideForm',()=>{
 				this.show = false;
+			});
+
+			obserable.on('setUserInfo',(data)=>{
+				this.nickname = data.nickname;
+				this.headimgurl = data.headimgurl;
 			})
 			 
 			 

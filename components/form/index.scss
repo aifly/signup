@@ -16,6 +16,16 @@ $color: #fffb88;
 		z-index: 202;
 	}
 
+	.zmiti-wx-tip{
+		background:#fff;
+		color:#f00;
+		text-align: center;
+		img{
+			width:40px;
+
+		}
+	}
+
 	.zmiti-msg-mask{
 		background:rgba(0, 0, 0, .5);
 		z-index: 100;
