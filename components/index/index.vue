@@ -88,11 +88,13 @@
 			},
 			menuClick(index){
 				var {obserable } =this;
+				
 				switch (index) {
 					case 0:
 					case 1://签到
 					case 2:
 					case 6:
+					case 4:
 					case 7:
 					if(!window.openid){
 						return;
@@ -103,12 +105,12 @@
 						this.mynumberinfo = '我的房间号是：'	
 						this.mynumber = this.userinfo.roomnumber||'未分配';
 					break;
-					case 4:
+					/* case 4:
 						this.mynumberinfo = '我的座位号是：'	
 						this.mynumber = this.userinfo.seatnumber||'未分配';
 						
 						
-					break;
+					break; */
 					case 5:
 						obserable.trigger({
 							type:'showSearch',

@@ -18,7 +18,7 @@
 	//zhusu1:'./assets/images/zhusu1.png',
 	ziliao:'./assets/images/ziliao.png',
 	//ziliao1:'./assets/images/ziliao1.png',
-	zuowei:'./assets/images/zuowei.png',
+	zuowei:'./assets/images/zuowei2.png',
 	//sousuo:'./assets/images/sousuo.png',
 	success:'./assets/images/success.png',
 	qiuzhu:'./assets/images/qiuzhu.png',
@@ -68,11 +68,12 @@ window.menus = [{
 	img1: imgs.zhusu1,
 	width: '68px'
 }, {
-	name: "我的座位",
+	name: "专家授课",
 	img: imgs.zuowei,
 	defaultImg: imgs.zuowei,
 	img1: imgs.zuowei1,
-	width: '60px'
+	width: '70px',
+	href: 'http://www.wenming.cn/specials/wmcj/2018term/zj/'
 }, {
 	name: "我的同学",
 	img: imgs.tongxunlu,
